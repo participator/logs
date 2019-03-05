@@ -8,20 +8,55 @@
     window.onload = function() {
         const displayCurrentYear = Object.create(currentYear);
         displayCurrentYear.applyToPage('year');
+
+        // Get data
+        // fetchLogs();
+        xhrLogs('./log.json').then(data => {
+            const displayLogsOnPage = Object.create(logsOnPage);
+            displayLogsOnPage.getElement('app');
+            displayLogsOnPage.displayLogs(data);            
+        });
+
     }
 
     // Fetch data from endpoint with search parameters
+    const fetchLogs = url => fetch(url).then(response => {
+        console.table(response);
+        return response;
+    })
+
+    const xhrLogs = (url) => {
+        let responseJson;
+        const networkRequest = new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('GET', url);
+            xhr.onload = () => resolve(xhr.responseText);
+            xhr.onerror = () => reject(xhr.statusText);
+            xhr.send();
+
+        });
+
+        return networkRequest.then((response) => {
+            responseJson = JSON.parse(response);
+            return responseJson;
+        }, error => {
+            xhr.onerror = () => {throw new Error(error);}
+        })
+    }
 
     // Display data
-    const displayOnPage = {
+    const logsOnPage = {
         getElement(id) {
-            if (!this.logsElement) {
-                this.logsElement = document.getElementById(id);
-                if (!this.logsElement) return new Error('Must supply a page element to display data on');
+            if (!this.logsDomElement) {
+                this.logsDomElement = document.getElementById(id);
+                if (!this.logsDomElement) return new Error('Must supply a page element to display data on');
             }
         },
-        displayData(id) {
-
+        displayLogs(logs) {
+            const logsElement = createLogsElement(logs);
+            this.logsDomElement.innerHTML = '';
+            this.logsDomElement.appendChild(logsElement);
         }
     }
 
@@ -49,6 +84,8 @@
         const logsElement = document.createElement('ul');
         logsElement.classList.add('logs');
 
+        if (!logs || logs.length === 0) return logsElement;
+
         logs.forEach(log => {
             const logElement = document.createElement('li');
 
@@ -58,14 +95,15 @@
             logElement.appendChild(p);
 
             // Add Helplful Resources
-            if (logs.helpfulResources.length > 0) {
-                logElement.appendChild(createHelpfulResourcesElement(logs.helpfulResources));
+            if (log.helpfulResources && log.helpfulResources.length > 0) {
+                logElement.appendChild(createHelpfulResourcesElement(log.helpfulResources));
             }
 
             // Add Last Modified
             const lastModified = document.createElement('p');
             lastModified.append('Last Modified ');
-            lastModified.append(log.modifiedDate || log.createDate || 'unset');
+            const date = new Date(log.modifiedDate || log.createDate);
+            lastModified.append(date.toLocaleDateString() || 'unset');
             logElement.appendChild(lastModified);
 
             // Add status

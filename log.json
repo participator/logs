@@ -16,13 +16,14 @@
             }
         ],
         "status": "Completed",
-        "createDate": "03042019",
-        "modifiedDate": "03042019",
+        "createDate": "2019-03-05",
+        "modifiedDate": "2019-03-05",
         "history": [
             "created"
         ]
     },
     {
+        "id": 0,
         "shortDescription": "Create log web application to easily track daily accomplishments",
         "longDescription": "",
         "helpfulResources": [
@@ -30,33 +31,45 @@
                 "name": "Github",
                 "url": "www.github.com",
                 "usefulness": "Using it to host this project"
+            },
+            {
+                "name": "StackOverflow",
+                "url": "https://stackoverflow.com/questions/18586921/how-to-launch-html-using-chrome-at-allow-file-access-from-files-mode",
+                "usefulness": "Find flags to allow chrome to read local files before server implemented"
+            },
+            {
+                "name": "Beebom",
+                "url": "https://beebom.com/chrome-flags-guide-to-enhance-web-browsing/",
+                "usefulness": "Exposed me to more flags to allow features I did not know chromw has i.e. a password generator"
             }
         ],
         "status": "Started",
-        "createDate": "03042019",
-        "modifiedDate": "03042019",
+        "createDate": "2019-03-05",
+        "modifiedDate": "2019-03-05",
         "history": [
             "created"
         ]
     },
     {
+        "id": 0,
         "shortDescription": "Look into React env issue setting up webpack",
         "longDescription": "A friend was getting the error \"Entrypoint undefined = <FilePath>\" and I worked to solved issued",
         "helpfulResources": [],
         "status": "Started",
-        "createDate": "03042019",
-        "modifiedDate": "03042019",
+        "createDate": "2019-03-05",
+        "modifiedDate": "2019-03-05",
         "history": [
             "created"
         ]
     },
     {
+        "id": 0,
         "shortDescription": "Install MySQL on Google Cloud Platform Cloud Compute",
         "longDescription": "",
         "helpfulResources": [],
         "status": "Started",
-        "createDate": "03042019",
-        "modifiedDate": "03042019",
+        "createDate": "2019-03-05",
+        "modifiedDate": "2019-03-05",
         "history": [
             "created"
         ]
