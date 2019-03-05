@@ -3,10 +3,9 @@ This is a simple node web app which displays user's daily accomplishments.
 
 ## Features
 *Current*
-* Initial push
+* Display logs
 
 *Future*
-* Display logs
 * Ability to add new accomplishments
 * Add node server
 * Add mongoDB to host data
