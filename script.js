@@ -10,40 +10,45 @@
         displayCurrentYear.applyToPage('year');
 
         // Get data
-        // fetchLogs();
-        xhrLogs('./log.json').then(data => {
+        fetchLogs('http://localhost/logs.json').then(data => {
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
             displayLogsOnPage.displayLogs(data);            
         });
+
+        // xhrLogs('./log.json').then(data => {
+        //     const displayLogsOnPage = Object.create(logsOnPage);
+        //     displayLogsOnPage.getElement('app');
+        //     displayLogsOnPage.displayLogs(data);            
+        // });
 
     }
 
     // Fetch data from endpoint with search parameters
     const fetchLogs = url => fetch(url).then(response => {
         console.table(response);
-        return response;
+        return response.body;
     })
 
-    const xhrLogs = (url) => {
-        let responseJson;
-        const networkRequest = new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
+    // const xhrLogs = (url) => {
+    //     let responseJson;
+    //     const networkRequest = new Promise((resolve, reject) => {
+    //         const xhr = new XMLHttpRequest();
 
-            xhr.open('GET', url);
-            xhr.onload = () => resolve(xhr.responseText);
-            xhr.onerror = () => reject(xhr.statusText);
-            xhr.send();
+    //         xhr.open('GET', url);
+    //         xhr.onload = () => resolve(xhr.responseText);
+    //         xhr.onerror = () => reject(xhr.statusText);
+    //         xhr.send();
 
-        });
+    //     });
 
-        return networkRequest.then((response) => {
-            responseJson = JSON.parse(response);
-            return responseJson;
-        }, error => {
-            xhr.onerror = () => {throw new Error(error);}
-        })
-    }
+    //     return networkRequest.then((response) => {
+    //         responseJson = JSON.parse(response);
+    //         return responseJson;
+    //     }, error => {
+    //         xhr.onerror = () => {throw new Error(error);}
+    //     })
+    // }
 
     // Display data
     const logsOnPage = {
