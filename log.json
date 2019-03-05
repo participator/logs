@@ -1,0 +1,64 @@
+[
+    {
+        "id": 0,
+        "shortDescription": "Advise client on upgrading to ssl migration",
+        "longDescription": "Advise to switch hosting providers from Godaddy to BlueHost as the latter makes it free and easy to add a ssl certificate.",
+        "helpfulResources": [
+            {
+                "name": "WordPress",
+                "url": "www.wordpress.com",
+                "usefulness": "Displays list of recommeded providers"
+            },
+            {
+                "name": "BlueHost",
+                "url": "www.bluehost.com",
+                "usefulness": "A highlighted feature is that a \"Free SSL Certificate Included\""
+            }
+        ],
+        "status": "Completed",
+        "createDate": "03042019",
+        "modifiedDate": "03042019",
+        "history": [
+            "created"
+        ]
+    },
+    {
+        "shortDescription": "Create log web application to easily track daily accomplishments",
+        "longDescription": "",
+        "helpfulResources": [
+            {
+                "name": "Github",
+                "url": "www.github.com",
+                "usefulness": "Using it to host this project"
+            }
+        ],
+        "status": "Started",
+        "createDate": "03042019",
+        "modifiedDate": "03042019",
+        "history": [
+            "created"
+        ]
+    },
+    {
+        "shortDescription": "Look into React env issue setting up webpack",
+        "longDescription": "A friend was getting the error \"Entrypoint undefined = <FilePath>\" and I worked to solved issued",
+        "helpfulResources": [],
+        "status": "Started",
+        "createDate": "03042019",
+        "modifiedDate": "03042019",
+        "history": [
+            "created"
+        ]
+    },
+    {
+        "shortDescription": "Install MySQL on Google Cloud Platform Cloud Compute",
+        "longDescription": "",
+        "helpfulResources": [],
+        "status": "Started",
+        "createDate": "03042019",
+        "modifiedDate": "03042019",
+        "history": [
+            "created"
+        ]
+    }
+]

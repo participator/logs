@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    padding: 0;
+    margin: 0;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: rgb(178, 34, 34); /*firebrick*/
+    font-size: 1.5em;
+    font-weight: bold;
+    min-height: 1.5em;
+}
+header p {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+header div {
+    font-size: 1rem;
+}
+header div.controls {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: auto;
+    margin-top: auto;
+    width: 50%;
+}
+header div.sortBy {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+header div.sortBy .sortControl {
+    /* font-size: 3em; */
+}
+
+footer {
+    background-color: rgba(178, 34, 34, .8);
+    bottom: 0;
+    color: white;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}

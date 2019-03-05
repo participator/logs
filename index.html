@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="script.js" type="text/javascript" charset="UTF-8"></script>
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>log</title>
+</head>
+<body>
+    <header>
+        <p>My Daily Log</p>
+        <div class="controls">
+            <div>
+                <label for="filter">Filter</label>
+                <input id="filter" type="search">
+            </div>
+            <div class="sortBy">
+                <label for="sortByOptions">Sort By</label>
+                <select id="sortByOptions">
+                    <option name="created" value="created">Date Created</option>
+                    <option name="modified" value="modified">Date Last Modified</option>
+                    <option name="status" value="status">Status</option>
+                    <option name="hasResources" value="hasResources">Has Resources</option>
+                </select>
+                <span class="sortControl" aria-label="ascending">&#42779;</span>
+                <span class="sortControl" aria-label="descending">&#42780;</span>
+            </span>
+        </div>
+    </header>
+    <main id="app">
+        <ul class="logs">
+            <li>
+                <p>shortdescription</p>
+                <ul>
+                    <li><a href="site">Name<p>Usefulness</p></a></li>
+                    <li><a>Helpful Resources</a></li>
+                </ul>
+                <p>Last Modifed <span></span></p>
+                <p>Status <span></span></p>
+                <button>Edit</button>
+            </li>
+        </ul>
+    </main>
+    <footer>&copy;<span id="year"></span></footer>
+</body>
+</html>
