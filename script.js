@@ -10,7 +10,7 @@
         displayCurrentYear.applyToPage('year');
 
         // Get data
-        fetchLogs('http://localhost/logs.json').then(data => {
+        fetchLogs('/log.json').then(data => {
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
             displayLogsOnPage.displayLogs(data);            
@@ -27,7 +27,7 @@
     // Fetch data from endpoint with search parameters
     const fetchLogs = url => fetch(url).then(response => {
         console.table(response);
-        return response.body;
+        return response.json();
     })
 
     // const xhrLogs = (url) => {
@@ -117,11 +117,23 @@
             status.append(log.status);
             logElement.appendChild(status);
 
-            // Add edit
-            const edit = document.createElement('button');
-            edit.setAttribute('id', log.id);
-            edit.append('Edit Log');
-            logElement.appendChild(edit);
+            // Add action buttons
+            const actions = document.createElement('div');
+
+            // Add update to actions
+            const update = document.createElement('button');
+            update.setAttribute('id', log.id);
+            update.append('Update Log');
+            actions.appendChild(update);
+            
+            // Add history to actions
+            const history = document.createElement('button');
+            history.setAttribute('id', log.id);
+            history.append('See History');
+            actions.appendChild(history);
+
+            // Append actions to logElement
+            logElement.appendChild(actions);
 
             // Append to LogsElement
             logsElement.appendChild(logElement);

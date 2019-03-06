@@ -12,20 +12,23 @@
             {
                 "name": "BlueHost",
                 "url": "www.bluehost.com",
-                "usefulness": "A highlighted feature is that a \"Free SSL Certificate Included\""
+                "usefulness": "A highlighted feature is that \"Free SSL Certificate Included\""
             }
         ],
         "status": "Completed",
         "createDate": "2019-03-05",
         "modifiedDate": "2019-03-05",
         "history": [
-            "created"
+            {
+                "date": "2019-03-05",
+                "change": "created"
+            }
         ]
     },
     {
         "id": 0,
         "shortDescription": "Create log web application to easily track daily accomplishments",
-        "longDescription": "",
+        "longDescription": ["Serve data from node server"],
         "helpfulResources": [
             {
                 "name": "Github",
@@ -41,13 +44,23 @@
                 "name": "Beebom",
                 "url": "https://beebom.com/chrome-flags-guide-to-enhance-web-browsing/",
                 "usefulness": "Exposed me to more flags to allow features I did not know chromw has i.e. a password generator"
+            },
+            {
+                "name": "Medium - Debugging Node.js with Chrome",
+                "url": "https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4",
+                "usefulness": "Great article on using chrome to debug a node application"
             }
         ],
         "status": "Started",
         "createDate": "2019-03-05",
-        "modifiedDate": "2019-03-05",
+        "modifiedDate": "2019-03-06",
         "history": [
-            "created"
+            {
+                "date": "2019-03-05",
+                "changes": {
+                    "longDescription": ""                    
+                }
+            }
         ]
     },
     {
@@ -59,7 +72,10 @@
         "createDate": "2019-03-05",
         "modifiedDate": "2019-03-05",
         "history": [
-            "created"
+            {
+                "date": "2019-03-05",
+                "change": "created"
+            }
         ]
     },
     {
@@ -71,7 +87,10 @@
         "createDate": "2019-03-05",
         "modifiedDate": "2019-03-05",
         "history": [
-            "created"
+            {
+                "date": "2019-03-05",
+                "change": "created"
+            }
         ]
     }
 ]
