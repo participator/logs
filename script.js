@@ -15,13 +15,6 @@
             displayLogsOnPage.getElement('app');
             displayLogsOnPage.displayLogs(data);            
         });
-
-        // xhrLogs('./log.json').then(data => {
-        //     const displayLogsOnPage = Object.create(logsOnPage);
-        //     displayLogsOnPage.getElement('app');
-        //     displayLogsOnPage.displayLogs(data);            
-        // });
-
     }
 
     // Fetch data from endpoint with search parameters
@@ -29,26 +22,6 @@
         console.table(response);
         return response.json();
     })
-
-    // const xhrLogs = (url) => {
-    //     let responseJson;
-    //     const networkRequest = new Promise((resolve, reject) => {
-    //         const xhr = new XMLHttpRequest();
-
-    //         xhr.open('GET', url);
-    //         xhr.onload = () => resolve(xhr.responseText);
-    //         xhr.onerror = () => reject(xhr.statusText);
-    //         xhr.send();
-
-    //     });
-
-    //     return networkRequest.then((response) => {
-    //         responseJson = JSON.parse(response);
-    //         return responseJson;
-    //     }, error => {
-    //         xhr.onerror = () => {throw new Error(error);}
-    //     })
-    // }
 
     // Display data
     const logsOnPage = {
@@ -94,10 +67,10 @@
         logs.forEach(log => {
             const logElement = document.createElement('li');
 
-            // Add ShortDescription
-            let p = document.createElement('p');
-            p.innerText = log.shortDescription;
-            logElement.appendChild(p);
+            // Add title
+            let title = document.createElement('h2');
+            title.innerText = log.title;
+            logElement.appendChild(title);
 
             // Add Helplful Resources
             if (log.helpfulResources && log.helpfulResources.length > 0) {
@@ -131,6 +104,12 @@
             history.setAttribute('id', log.id);
             history.append('See History');
             actions.appendChild(history);
+            
+            // Add See task to actions
+            const tasks = document.createElement('button');
+            tasks.setAttribute('id', log.id);
+            tasks.append('See Tasks');
+            actions.appendChild(tasks);
 
             // Append actions to logElement
             logElement.appendChild(actions);
