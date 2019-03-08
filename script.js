@@ -18,8 +18,12 @@
     }
 
     // Fetch data from endpoint with search parameters
-    const fetchLogs = url => fetch(url).then(response => {
-        console.table(response);
+    const fetchLogs = url => fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        // console.table(response);K
         return response.json();
     })
 
