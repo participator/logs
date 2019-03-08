@@ -3,7 +3,7 @@
     if(window.Log) throw new Error('Name collision with Log package');
 
     const exports = {};
-    window.log = exports;
+    window.Log = exports;
 
     window.onload = function() {
         const displayCurrentYear = Object.create(currentYear);

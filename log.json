@@ -38,6 +38,11 @@
         "modifiedDate": "2019-03-07",
         "helpfulResources": [
             {
+                "name": "You Only Wish MongoDB Wasn't relational",
+                "url": "http://seanhess.github.io/2012/02/01/mongodb_relational.html",
+                "usefulness": "Found via [StackOverflow](https://stackoverflow.com/questions/11775222/mongodb-linked-collections) answer and it helps aviods pitfalls of putting everything details of an object into a single document.  It suggest that some \"relational\" practices are needed to be able to effectively query data and it will not noticably reduce performance."
+            },
+            {
                 "name": "Github",
                 "url": "www.github.com",
                 "usefulness": "Using it to host this project"
@@ -64,6 +69,18 @@
             }
         ],
         "tasks": [
+            {
+                "title": "Research and add mongoDB to store data",
+                "description": "",
+                "status": "In Progress",
+                "completionDate": null,
+                "createDate": "2019-03-07",
+                "modifiedDate": "2019-03-09",
+                "explanation": "This will allow the application to store the data in a database instead of a json file",
+                "history": [
+
+                ]
+            },
             {
                 "title": "Server files from node",
                 "description": "",
@@ -151,16 +168,18 @@
     {
         "uid": 0,
         "id": 0,
-        "createDate": "2019-03-05",
-        "modifiedDate": "2019-03-05",
         "title": "Install MySQL on Google Cloud Platform Cloud Compute",
         "description": "",
         "status": "In Progress",
         "type": "Development",
+        "createDate": "2019-03-05",
+        "modifiedDate": "2019-03-05",
         "helpfulResources": [],
         "tasks": [
             {
-                "title": "Server files from node",
+                "_id": 0,
+                "log_id": 0,
+                "title": "Serve a file from apache",
                 "description": "",
                 "completed": true,
                 "completionDate": null,
@@ -174,6 +193,7 @@
         ],
         "history": [
             {
+                "log_id": 0,
                 "date": "2019-03-05",
                 "change": "created"
             }
