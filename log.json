@@ -38,11 +38,6 @@
         "modifiedDate": "2019-03-07",
         "helpfulResources": [
             {
-                "name": "You Only Wish MongoDB Wasn't relational",
-                "url": "http://seanhess.github.io/2012/02/01/mongodb_relational.html",
-                "usefulness": "Found via [StackOverflow](https://stackoverflow.com/questions/11775222/mongodb-linked-collections) answer and it helps aviods pitfalls of putting everything details of an object into a single document.  It suggest that some \"relational\" practices are needed to be able to effectively query data and it will not noticably reduce performance."
-            },
-            {
                 "name": "Github",
                 "url": "www.github.com",
                 "usefulness": "Using it to host this project"
@@ -66,6 +61,11 @@
                 "name": "StackOverflow - How to auto-reload file in Node.js",
                 "url": "https://stackoverflow.com/a/14406029",
                 "usefulness": "Learned about nodemon that is a tool which watches for file changes and restarts node when they occur."
+            },
+            {
+                "name": "You Only Wish MongoDB Wasn't relational",
+                "url": "http://seanhess.github.io/2012/02/01/mongodb_relational.html",
+                "usefulness": "Found via [StackOverflow](https://stackoverflow.com/questions/11775222/mongodb-linked-collections) answer and it helps aviods pitfalls of putting everything details of an object into a single document.  It suggest that some \"relational\" practices are needed to be able to effectively query data and it will not noticably reduce performance."
             }
         ],
         "tasks": [
@@ -84,7 +84,7 @@
             {
                 "title": "Server files from node",
                 "description": "",
-                "completed": true,
+                "status": "Completed",
                 "completionDate": null,
                 "createDate": "2019-03-06",
                 "modifiedDate": "2019-03-07",
@@ -96,11 +96,11 @@
             {
                 "title": "Create initial log data",
                 "description": "Create inital log data",
-                "completed": true,
+                "status": "Completed",
                 "completionDate": null,
                 "createDate": "2019-03-06",
                 "modifiedDate": "2019-03-07",
-                "explanation": "Simplified how resources are served.",
+                "explanation": ".json file made to store first logs",
                 "history": [
 
                 ]

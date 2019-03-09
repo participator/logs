@@ -10,11 +10,18 @@
         displayCurrentYear.applyToPage('year');
 
         // Get data
-        fetchLogs('/log.json').then(data => {
+        // fetchLogs('/log.json').then(data => {
+        //     const displayLogsOnPage = Object.create(logsOnPage);
+        //     displayLogsOnPage.getElement('app');
+        //     displayLogsOnPage.displayLogs(data);            
+        // });
+
+        fetchLogs('/readAll').then(data => {
+            console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
-            displayLogsOnPage.displayLogs(data);            
-        });
+            displayLogsOnPage.displayLogs(data); 
+        })
     }
 
     // Fetch data from endpoint with search parameters

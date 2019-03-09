@@ -3,6 +3,8 @@ fs = require('fs'),
 url = require('url'),
 path = require('path');
 
+const dbRead = require('./dbRead');
+
 const port = 80;
 // const port = 9229;
 
@@ -31,6 +33,15 @@ const server = http.createServer((req, res) => {
         }
         file.pipe(res);
     }
+    else if (req.url.includes('readAll')) {
+        dbRead.all().then(results => {
+            res.setHeader('Content-Type', 'application/json');
+            res.write(JSON.stringify(results));
+            res.end();
+        }).catch(err => {
+            console.error('readAll error with:' + err.message);
+        });
+    }
     else {
         res.writeHead('404', 'File not found');
         res.end();
@@ -46,7 +57,7 @@ const mimeTypes = {
 
 const requestType = {
     main: 'index.html'
-}
+};
 
 const setResponseHeaderMimeType = fileExt => {
     let mimeType;
@@ -67,5 +78,6 @@ const setResponseHeaderMimeType = fileExt => {
     }
     
     return mimeType;
-}
+};
+
 server.listen(port);
