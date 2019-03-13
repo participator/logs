@@ -33,7 +33,7 @@ const dbName = 'Log';
 const dbConnect = (operationCallback, data) => {
     return MongoClient.connect(url, { useNewUrlParser: true }).then((client) => {
         // assert.equal(null, err);
-        console.log('Connected successfully to server');
+        console.log('Connected successfully to db server');
     
         const db = client.db(dbName);
     

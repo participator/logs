@@ -16,7 +16,8 @@
         //     displayLogsOnPage.displayLogs(data);            
         // });
 
-        fetchLogs('/readAll').then(data => {
+        // fetchLogs('/read/all').then(data => {
+        fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
