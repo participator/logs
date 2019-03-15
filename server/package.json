@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Node server for log application",
+  "main": "server.js",
+  "dependencies": {
+    "assert": "^1.4.1",
+    "mongodb": "^3.1.13"
+  },
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

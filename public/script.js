@@ -16,8 +16,8 @@
         //     displayLogsOnPage.displayLogs(data);            
         // });
 
-        // fetchLogs('/read/all').then(data => {
-        fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
+        fetchLogs('//localhost:8081/read/all').then(data => {
+        // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
@@ -26,10 +26,8 @@
     }
 
     // Fetch data from endpoint with search parameters
-    const fetchLogs = url => fetch(url, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    const fetchLogs = (url, data) => fetch(url, {
+        body: JSON.stringify(data)
     }).then(response => {
         // console.table(response);K
         return response.json();
