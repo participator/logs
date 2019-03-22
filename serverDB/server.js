@@ -21,10 +21,11 @@ const server = http.createServer((req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         read.callDB(req, res).catch(err => {
             console.error('[db failure]', err.message);
+            res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
         });
     }
     else {
-        res.writeHead(404, 'Invalid path');
+        res.writeHead(404, 'Not Found');
         res.end();
     }
 });

@@ -4,23 +4,12 @@ dbConnect = require('./dbConnect');
 /**
  * Find all documents
  * @param {*} db 
- * @param {*} callback 
+ * @param {Object} document Object containing field:values to search
  * @returns {Promise}
  */
-const findDocuments = (db, document, callback) => {
+const findDocuments = (db, document) => {
     // Get the documents collection
     const collection = db.collection('Logs');
-
-    // Find specific documents
-    // collection.find({'a': 3}).toArray((err, docs) => {
-
-    // Find some documents    
-    // collection.find(document).toArray((err, docs) => {
-    //     assert.equal(err, null);
-    //     console.log('Found the following documents');
-    //     // console.log(docs);
-    //     return callback(docs);
-    // });
     
     return collection.find(document).toArray();
 };

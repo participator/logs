@@ -1,31 +1,44 @@
 (function(undefined) {
 
-    if(window.Log) throw new Error('Name collision with Log package');
-
+    if (!window.Log) window.Log = {};
+    if (window.Log.App) throw new Error('Name collision with Log package');
+    
     const exports = {};
-    window.Log = exports;
+    window.Log.App = exports;
+
+    const LogError = window.Log.Error;
 
     window.onload = function() {
         const displayCurrentYear = Object.create(currentYear);
         displayCurrentYear.applyToPage('year');
 
-        // Get data
+        // TEST ONLY: Get data from local computer
         // fetchLogs('/log.json').then(data => {
         //     const displayLogsOnPage = Object.create(logsOnPage);
         //     displayLogsOnPage.getElement('app');
         //     displayLogsOnPage.displayLogs(data);            
         // });
 
-        fetchLogs('//localhost:8081/read/all').then(data => {
+        const host = '//localhost:8081';
+        fetchLogs(host + '/read/all').then(data => {
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
             displayLogsOnPage.displayLogs(data); 
+        }).catch(err => {
+            const app = document.getElementById('app');
+            app.innerHTML = 'Unable to load data';
+            LogError(err);
         })
     }
 
     // Fetch data from endpoint with search parameters
+    /**
+     * 
+     * @param {string} url - url string to resource
+     * @param {Object} data - Request data
+     */
     const fetchLogs = (url, data) => fetch(url, {
         body: JSON.stringify(data)
     }).then(response => {
@@ -35,12 +48,20 @@
 
     // Display data
     const logsOnPage = {
+        /**
+         * Grabs DOM element to display log data in
+         * @param {string} id - element id
+         */
         getElement(id) {
             if (!this.logsDomElement) {
                 this.logsDomElement = document.getElementById(id);
                 if (!this.logsDomElement) return new Error('Must supply a page element to display data on');
             }
         },
+        /**
+         * Display log data inside DOM element
+         * @param {Object} - JSON data of logs
+         */
         displayLogs(logs) {
             const logsElement = createLogsElement(logs);
             this.logsDomElement.innerHTML = '';
@@ -105,19 +126,19 @@
 
             // Add update to actions
             const update = document.createElement('button');
-            update.setAttribute('id', log.id);
+            update.setAttribute('id', log._id);
             update.append('Update Log');
             actions.appendChild(update);
             
             // Add history to actions
             const history = document.createElement('button');
-            history.setAttribute('id', log.id);
+            history.setAttribute('id', log._id);
             history.append('See History');
             actions.appendChild(history);
             
             // Add See task to actions
             const tasks = document.createElement('button');
-            tasks.setAttribute('id', log.id);
+            tasks.setAttribute('id', log._id);
             tasks.append('See Tasks');
             actions.appendChild(tasks);
 

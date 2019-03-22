@@ -13,42 +13,22 @@ const dbName = 'Log';
  * @param { Object } operationCallback - CRUD operation callback
  * @returns { Promise }
  */
-// const dbConnect = (operationCallback, data) => {
-//     return MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
-//         assert.equal(null, err);
-//         console.log('Connected successfully to server');
-    
-//         const db = client.db(dbName);
-    
-//         // console.log('[db] ', db);
-//         // return operationCallback(db, data, (results) => {
-//         //     client.close() 
-//         //     // console.log('[dbConnect]', results);
-//         //     return results;
-//         // });
-//         return operationCallback(db, data);
-//     });
-// }
-
 const dbConnect = (operationCallback, data) => {
     return MongoClient.connect(url, { useNewUrlParser: true }).then((client) => {
-        // assert.equal(null, err);
+        assert.equal(null, err);
         console.log('Connected successfully to db server');
     
         const db = client.db(dbName);
-    
-        // console.log('[db] ', db);
-        // return operationCallback(db, data, (results) => {
-        //     client.close() 
-        //     // console.log('[dbConnect]', results);
-        //     return results;
-        // });
+        
         return operationCallback(db, data).then(data => {
             client.close();
             return data;
         });
-    }, onrejected => onrejected).catch(err => {
-        console.error(err);
+    }, onrejected => {
+        console.log('onrejected', onrejected)
+    }).catch(err => {
+        console.log('[dbConnect] error',err);
+        return err;
     });
 }
 
