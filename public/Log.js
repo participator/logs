@@ -25,13 +25,13 @@
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
             displayLogsOnPage.getElement('app');
-            displayLogsOnPage.displayLogs(data); 
-        }).catch(err => {
+            displayLogsOnPage.displayLogs(data);
+        })
+        .catch(() => {
             const app = document.getElementById('app');
             app.innerHTML = 'Unable to load data';
-            LogError(err);
-        })
-    }
+        });
+    };
 
     // Fetch data from endpoint with search parameters
     /**
@@ -42,9 +42,11 @@
     const fetchLogs = (url, data) => fetch(url, {
         body: JSON.stringify(data)
     }).then(response => {
-        // console.table(response);K
         return response.json();
-    })
+    }).catch(err => {
+        // LogError(err);
+        throw err;
+    });
 
     // Display data
     const logsOnPage = {
@@ -67,7 +69,7 @@
             this.logsDomElement.innerHTML = '';
             this.logsDomElement.appendChild(logsElement);
         }
-    }
+    };
 
     // Current Year
     const currentYear = {
@@ -80,7 +82,7 @@
         applyToPage(id) {
             document.getElementById(id).innerText = this.getYear();
         }
-    }
+    };
 
 
     //--- Helper Methods ---//
@@ -111,7 +113,7 @@
             // Add Last Modified
             const lastModified = document.createElement('p');
             lastModified.append('Last Modified ');
-            const date = new Date(log.modifiedDate || log.createDate);
+            const date = new Date(log.modifiedDate || log.createdDate);
             lastModified.append(date.toLocaleDateString() || 'unset');
             logElement.appendChild(lastModified);
 
@@ -151,7 +153,7 @@
 
 
         return logsElement;
-    }
+    };
 
     /**
      * Creates the HTMLElements for the helpful resources section
@@ -168,7 +170,7 @@
         return helpfulResourcesElement;
     };
 
-    const createHelpfulResourceElement = helpfulResource => {        
+    const createHelpfulResourceElement = helpfulResource => {
         const element = document.createElement('li');
         
         const link = document.createElement('a');
@@ -184,8 +186,5 @@
         element.appendChild(usefulness);
         
         return element;
-    }
-
-    
-    
+    };
 })()

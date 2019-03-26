@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Node server for log application",
+  "description": "Web server for Log application",
   "main": "server.js",
   "dependencies": {
     "assert": "^1.4.1",

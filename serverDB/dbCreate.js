@@ -1,38 +1,45 @@
 const assert = require('assert'),
-dbConnect = require('./dbConnect');
+dbConnect = require('./dbConnect'),
+logModel = require('./models/log');
 
 /**
  * Insert many documents
  * @param {*} db 
  * @param {*} callback 
- * @returns { undefined }
+ * @returns { Promise } - object with newly inserted document _id
  */
-const insertDocuments = function(db, documents, callback) {
-    // Get the documents collection
-    const collection = db.collection('documents');
+const insertDocuments = function(db, collectionName, documents) {
+    const collection = db.collection(collectionName);
+    
+    if (documents === undefined) throw new Error('[dbCreate] Nothing provided to create');
 
-    // Insert some documents
-    // collection.insertMany([
-    //     {a: 1}, {a: 2}, {a: 3}
-    // ], function(err, result) {
-    collection.insertMany(documents, function(err, result) {
-        assert.equal(err, null);
-        assert.equal(3, result.result.n);
-        assert.equal(3, result.ops.length);
-        console.log("Inserted 3 documents into the collection");
-        callback(result);
-    });
+    if (documents.length === undefined) {
+        return collection.insertOne(documents);
+    }
+    else if (Array.isArray(documents)) {
+        return collection.insertMany(documents);
+    }
 }
 
 /**
- * Add many documents
- * @param { Object } documents 
- * @returns { undefined }
+ * Insert document(s) into given collection with for given user
+ * @param {string} collectionName 
+ * @param {Object|Object[]} documents 
  */
-const insertMany = (documents) => {
-    dbConnect(insertDocuments, documents);
+const insertLog = (collectionName, documents, _userId) => {
+    const logs = documents.map(document => {
+        const log = Object.create(logModel);
+        log.init(_userId, document.title);
+        log.description = document.description;
+        log.helpfulResources = document.helpfulResources;
+        log.status = document.status;
+        log.type = document.type;
+        return log;
+    });
+
+    return dbConnect(insertDocuments, collectionName, logs);
 };
 
 module.exports = {
-    insertMany
+    insertLog
 };

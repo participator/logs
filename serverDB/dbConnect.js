@@ -7,29 +7,32 @@ const url = 'mongodb://localhost:27017/logs';
 // Database Name
 const dbName = 'Log';
 
+/**
+ * Create Log Database
+ */
+
 // Use connect method to connect to the db server
 /**
  * dbConnect
  * @param { Object } operationCallback - CRUD operation callback
  * @returns { Promise }
  */
-const dbConnect = (operationCallback, data) => {
+const dbConnect = (operationCallback, collectionName, data) => {
     return MongoClient.connect(url, { useNewUrlParser: true }).then((client) => {
-        assert.equal(null, err);
+        // assert.equal(null, err);
         console.log('Connected successfully to db server');
     
         const db = client.db(dbName);
         
-        return operationCallback(db, data).then(data => {
+        return operationCallback(db, collectionName, data).then(data => {
             client.close();
             return data;
         });
-    }, onrejected => {
-        console.log('onrejected', onrejected)
+    }, err => {
+        throw err;
     }).catch(err => {
-        console.log('[dbConnect] error',err);
-        return err;
+        throw err;
     });
-}
+};
 
 module.exports = dbConnect;

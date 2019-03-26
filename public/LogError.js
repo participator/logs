@@ -6,7 +6,7 @@
     const host = '//localhost:8081';
 
     const exports = err => {
-        fetch(host + '/error/create', {
+        fetch(host + '/create/error', {
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify(err)

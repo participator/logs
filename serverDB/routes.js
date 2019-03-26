@@ -12,12 +12,17 @@ const matchIdsRegExpString = /[0-9a-z]{24}/g;
  * Route parsers for each CRUD operation
  */
 const routes = {
+    /**
+     * Create - new entry in database
+     * _userId is passed in the body
+     */
     create: {
+        error: new RegExp('^/create/error$'),
         log: new RegExp('^/create/log$'),
-        task: new RegExp(`^/create/task$`),
-        user: new RegExp(`^/create/user$`),
         logHistory: new RegExp(`^/create/log/history$`),
-        taskHistory: new RegExp(`^/create/task/history$`)
+        task: new RegExp(`^/create/task$`),
+        taskHistory: new RegExp(`^/create/task/history$`),
+        user: new RegExp(`^/create/user$`)
     },
     read: {
         all: new RegExp('^/read/all$'),
