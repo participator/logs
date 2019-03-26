@@ -99,6 +99,7 @@
 
         logs.forEach(log => {
             const logElement = document.createElement('li');
+            logElement.setAttribute('data-id', log._id);
 
             // Add title
             let title = document.createElement('h2');

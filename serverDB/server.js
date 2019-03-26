@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
     if (read.isRouteMatch(req.url)) {
         read.callDB('Logs', req.url)
         .then(dbResponse => {
-            console.log('[read dbResponse]', dbResponse);
+            // console.log('[read dbResponse]', dbResponse.length);
             res.write(JSON.stringify(dbResponse));
             res.end();
         })
@@ -45,7 +45,7 @@ const server = http.createServer((req, res) => {
             return create.callDB('Logs', req.url, data);
         })
         .then(dbResponse => {
-            console.log('[create dbResponse]', dbResponse);
+            // console.log('[create dbResponse]', dbResponse.length);
             res.write(JSON.stringify(dbResponse));
             res.end();
         })
