@@ -9,6 +9,10 @@
     const LogError = window.Log.Error;
 
     window.onload = function() {
+        // TODO: Get User Id
+        // TODO: Store on Log
+
+        // Get Logs
         const displayCurrentYear = Object.create(currentYear);
         displayCurrentYear.applyToPage('year');
 
@@ -65,6 +69,7 @@
          * @param {Object} - JSON data of logs
          */
         displayLogs(logs) {
+            window.Log.userId = logs[0]._userId; // Temporary fix until user is know from signin
             const logsElement = createLogsElement(logs);
             this.logsDomElement.innerHTML = '';
             this.logsDomElement.appendChild(logsElement);
