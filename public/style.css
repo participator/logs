@@ -1,6 +1,10 @@
 * {
     box-sizing: border-box;
 }
+:root {
+    --red: rgb(178, 34, 34);
+    --red-transparent: rgb(178, 34, 34, 0.9);
+}
 body {
     padding: 0;
     margin: 0;
@@ -10,7 +14,7 @@ header {
     position: fixed;
     justify-content: space-between;
     color: white;
-    background-color: rgb(178, 34, 34); /*firebrick*/
+    background-color: var(--red); /*firebrick*/
     font-weight: bold;
     min-height: 1.5em;
     top: 0;
@@ -62,7 +66,7 @@ ul.logs ul li {
     width: 40%;
 }
 #create {
-    background-color: rgba(178, 34, 34, .9);
+    background-color: var(--red-transparent);
     border: none;
     border-radius: 50%;
     bottom: 1em;
@@ -72,8 +76,44 @@ ul.logs ul li {
     position: fixed;
     right: 1em;
 }
+#createForm {
+    background-color: white;
+    bottom: calc(1em + 5px);
+    border: grey solid 1px;
+    position: fixed;
+    min-height: 200px;
+    right: calc(2em + 3em);
+    width: 300px;
+}
+#createForm form {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    justify-content: space-between;
+}
+.description {
+    height: 4em;
+    resize: none;
+    width: 100%;
+}
+.title {
+    width: 100%;
+}
+.createLog {
+    align-self: center;
+}
+.createLog_close {
+    align-self: flex-end;
+    background-color: var(--red);
+    border: none;
+}
+.createLog_close:hover,
+.createLog_close:focus {
+    outline: solid lightblue;
+}
 footer {
-    background-color: rgba(178, 34, 34, .9);
+    background-color: var(--red-transparent);
     bottom: 0;
     color: white;
     position: fixed;

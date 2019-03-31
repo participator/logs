@@ -41,6 +41,9 @@ const server = http.createServer((req, res) => {
         });
     }
     else if (create.isRouteMatch(req.url)) {
+        console.log('[requested url]', req.url);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'POST');
         readRequestPromise(req).then(data => {
             return create.callDB('Logs', req.url, data);
         })
