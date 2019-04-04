@@ -9,7 +9,7 @@ body {
     padding: 0;
     margin: 0;
 }
-header {
+.pageHeader {
     display: flex;
     position: fixed;
     justify-content: space-between;
@@ -78,8 +78,8 @@ ul.logs ul li {
 }
 #createForm {
     background-color: white;
-    bottom: calc(1em + 5px);
-    border: grey solid 1px;
+    bottom: 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.45);
     position: fixed;
     min-height: 200px;
     right: calc(2em + 3em);
@@ -88,25 +88,51 @@ ul.logs ul li {
 #createForm form {
     display: flex;
     flex-direction: column;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding-bottom: 1em;
     justify-content: space-between;
 }
-.description {
+#createForm input,
+#createForm textarea {
+    border: 1px solid lightgrey;
+    border-left: none;
+    border-right: none;
+}
+#createForm select {
+    border: 1px solid lightgrey;
+}
+.createForm_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    background-color: var(--red); /*firebrick*/
+    font-weight: bold;
+    min-height: 1em;
+    padding: 0 0.2em;
+    width: 100%;
+}
+.createForm_header_title {
+    margin: 0.5em 0;
+}
+.createForm_label_text {
+    padding-left: 0.2em;
+}
+.createForm_title {
+    width: 100%;
+}
+.createForm_description {
     height: 4em;
     resize: none;
     width: 100%;
 }
-.title {
-    width: 100%;
-}
 .createLog {
     align-self: center;
+    margin: 1em;
 }
 .createLog_close {
-    align-self: flex-end;
     background-color: var(--red);
     border: none;
+    color: white;
 }
 .createLog_close:hover,
 .createLog_close:focus {

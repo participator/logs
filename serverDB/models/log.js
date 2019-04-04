@@ -2,13 +2,13 @@
  * logModel - model for a log document
  */
 const logModel = {
-    _userId: undefined,
+    _userId: null,
     title: "",
     description: "",
     status: "",
     type: "",
-    createdDate: undefined,
-    modifiedDate: undefined,
+    createdDate: null,
+    modifiedDate: null,
     helpfulResources: [],
     init(userId, title) {
         this._userId = userId;
@@ -16,7 +16,7 @@ const logModel = {
         this.createdDate = this.createdDate || Date.now(); // TODO: possibly create this value in db with trigger
 
         if (!this._userId) throw new Error('userId must be provided');
-        if (!this.title) throw new Error('ritle must be provided');
+        if (!this.title) throw new Error('title must be provided');
     }
 };
 

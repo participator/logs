@@ -102,63 +102,69 @@
 
         if (!logs || logs.length === 0) return logsElement;
 
-        logs.forEach(log => {
-            const logElement = document.createElement('li');
-            logElement.setAttribute('data-id', log._id);
-
-            // Add title
-            let title = document.createElement('h2');
-            title.innerText = log.title;
-            logElement.appendChild(title);
-
-            // Add Helplful Resources
-            if (log.helpfulResources && log.helpfulResources.length > 0) {
-                logElement.appendChild(createHelpfulResourcesElement(log.helpfulResources));
-            }
-
-            // Add Last Modified
-            const lastModified = document.createElement('p');
-            lastModified.append('Last Modified ');
-            const date = new Date(log.modifiedDate || log.createdDate);
-            lastModified.append(date.toLocaleDateString() || 'unset');
-            logElement.appendChild(lastModified);
-
-            // Add status
-            const status = document.createElement('p');
-            status.append('Status ');
-            status.append(log.status);
-            logElement.appendChild(status);
-
-            // Add action buttons
-            const actions = document.createElement('div');
-
-            // Add update to actions
-            const update = document.createElement('button');
-            update.setAttribute('id', log._id);
-            update.append('Update Log');
-            actions.appendChild(update);
-            
-            // Add history to actions
-            const history = document.createElement('button');
-            history.setAttribute('id', log._id);
-            history.append('See History');
-            actions.appendChild(history);
-            
-            // Add See task to actions
-            const tasks = document.createElement('button');
-            tasks.setAttribute('id', log._id);
-            tasks.append('See Tasks');
-            actions.appendChild(tasks);
-
-            // Append actions to logElement
-            logElement.appendChild(actions);
-
-            // Append to LogsElement
-            logsElement.appendChild(logElement);
+        const logElements = logs.map(log => {
+            return exports.createLogElement(log);
         });
-
+        
+        // Append to LogsElement
+        logElements.forEach(logElement => logsElement.insertBefore(logElement, logsElement.children[0]));
 
         return logsElement;
+    };
+
+    exports.createLogElement = log => {
+
+        const logElement = document.createElement('li');
+        logElement.setAttribute('data-id', log._id);
+
+        // Add title
+        let title = document.createElement('h2');
+        title.innerText = log.title;
+        logElement.appendChild(title);
+
+        // Add Helplful Resources
+        if (log.helpfulResources && log.helpfulResources.length > 0) {
+            logElement.appendChild(createHelpfulResourcesElement(log.helpfulResources));
+        }
+
+        // Add Last Modified
+        const lastModified = document.createElement('p');
+        lastModified.append('Last Modified ');
+        const date = new Date(log.modifiedDate || log.createdDate);
+        lastModified.append(date.toLocaleDateString() || 'unset');
+        logElement.appendChild(lastModified);
+
+        // Add status
+        const status = document.createElement('p');
+        status.append('Status ');
+        status.append(log.status);
+        logElement.appendChild(status);
+
+        // Add action buttons
+        const actions = document.createElement('div');
+
+        // Add update to actions
+        const update = document.createElement('button');
+        update.setAttribute('id', log._id);
+        update.append('Update Log');
+        actions.appendChild(update);
+
+        // Add history to actions
+        const history = document.createElement('button');
+        history.setAttribute('id', log._id);
+        history.append('See History');
+        actions.appendChild(history);
+
+        // Add See task to actions
+        const tasks = document.createElement('button');
+        tasks.setAttribute('id', log._id);
+        tasks.append('See Tasks');
+        actions.appendChild(tasks);
+        
+        // Append actions to logElement
+        logElement.appendChild(actions);
+
+        return logElement;
     };
 
     /**
