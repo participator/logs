@@ -20,92 +20,102 @@ const port = process.env.port || 8081;
  */
 const server = http.createServer((req, res) => {
     console.log('[requested url]', req.url);
-    res.setHeader('Access-Control-Max-Age', '-1');
-    if (reads.isRouteMatch(req.url)) {
+    // res.setHeader('Access-Control-Max-Age', '-1');
+    if (req.method === 'GET') {
+        // Set Response Headers
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Method', 'GET');
-        reads.callDB('Logs', req.url)
-        .then(dbResponse => {
-            // console.log('[read dbResponse]', dbResponse.length);
-            res.setHeader('Content-Type', mime.mimeTypes.json);
-            res.write(JSON.stringify(dbResponse));
-            res.end();
-        })
-        .catch(err => {
-            if (err.message === 'Not Found') {
-                console.error('[read Not Found]', err.message);
-                res.setHeader('Content-Type', mime.mimeTypes.html);
-                res.writeHead(404, err.message);
+
+        if (reads.isRouteMatch(req.url)) {
+            reads.callDB('Logs', req.url)
+            .then(dbResponse => {
+                // console.log('[read dbResponse]', dbResponse.length);
+                res.setHeader('Content-Type', mime.mimeTypes.json);
+                res.write(JSON.stringify(dbResponse));
                 res.end();
-            }
-            else {
-                console.error('[read db failure]', err.message);
-                res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
-                res.end();
-            }
-        });
-    }
-    else if (creates.isRouteMatch(req.url)) {
-        if (req.method === 'OPTIONS') {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'POST');
+            })
+            .catch(err => {
+                if (err.message === 'Not Found') {
+                    console.error('[read Not Found]', err.message);
+                    respondWithNotFound(res);
+                }
+                else {
+                    console.error('[read db failure]', err.message);
+                    res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
+                    res.end();
+                }
+            });
         }
-        readRequestPromise(req).then(data => {
-            return creates.callDB('Logs', req.url, data);
-        })
-        .then(dbResponse => {
-            // console.log('[create dbResponse]', dbResponse.length);
-            res.setHeader('Content-Type', mime.mimeTypes.json);
-            res.write(JSON.stringify(dbResponse));
-            res.end();
-        })
-        .catch(err => {
-            if (err.message === 'Not Found') {
-                console.error('[create Not Found]', err.message);
-                res.setHeader('Content-Type', mime.mimeTypes.html);
-                res.writeHead(404, err.message);
-                res.end();
-            }
-            else {
-                console.error('[create db failure]', err.message);
-                res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
-                res.end();
-            }
-        });
-    }
-    else if (deletes.isRouteMatch(req.url)) {
-        if (req.method === 'OPTIONS') {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'DELETE');
-            res.end();
+        else {
+            respondWithNotFound(res);
         }
-        readRequestPromise(req).then(data => {
-            return deletes.callDB('Logs', req.url, data);
-        })
-        .then(dbResponse => {
-            console.log('[delete dbResponse]', dbResponse);
-            res.setHeader('Content-Type', mime.mimeTypes.json);
-            res.write(JSON.stringify(dbResponse));
-            res.end();
-        })
-        .catch(err => {
-            if (err.message === 'Not Found') {
-                console.error('[delete Not Found]', err.message);
-                res.setHeader('Content-Type', mime.mimeTypes.html);
-                res.writeHead(404, err.message);
+    }
+    else if (req.method === 'POST') {
+        // Set Response Headers
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        res.setHeader('Access-Control-Allow-Methods', 'POST');
+
+        if (creates.isRouteMatch(req.url)) {
+            readRequestPromise(req)
+            .then(data => creates.callDB('Logs', req.url, data))
+            .then(dbResponse => {
+                // console.log('[create dbResponse]', dbResponse.length);
+                res.setHeader('Content-Type', mime.mimeTypes.json);
+                res.write(JSON.stringify(dbResponse));
                 res.end();
-            }
-            else {
-                console.error('[delete db failure]', err.message);
-                res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
+            })
+            .catch(err => {
+                if (err.message === 'Not Found') {
+                    console.error('[create Not Found]', err.message);
+                    respondWithNotFound(res);
+                }
+                else {
+                    console.error('[create db failure]', err.message);
+                    res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
+                    res.end();
+                }
+            });
+        }
+        else {
+            respondWithNotFound(res);
+        }
+    }
+    else if (req.method === 'OPTIONS') {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'DELETE');
+        res.end();
+    }
+    else if (req.method === 'DELETE') {
+        // Set Response Headers
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        res.setHeader('Access-Control-Allow-Methods', 'DELETE');
+
+        if (deletes.isRouteMatch(req.url)) {
+            readRequestPromise(req).then(data => deletes.callDB('Logs', req.url, data))
+            .then(dbResponse => {
+                console.log('[delete dbResponse]', dbResponse);
+                res.setHeader('Content-Type', mime.mimeTypes.json);
+                res.write(JSON.stringify(dbResponse));
                 res.end();
-            }
-        });
+            })
+            .catch(err => {
+                if (err.message === 'Not Found') {
+                    console.error('[delete Not Found]', err.message);
+                    respondWithNotFound(res);
+                }
+                else {
+                    console.error('[delete db failure]', err.message);
+                    res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
+                    res.end();
+                }
+            });
+        }
+        else {
+            respondWithNotFound(res);
+        }
     }
     else {
-        res.setHeader('Content-type', 'text/html');
-        res.writeHead(404, 'Not Found');
-        res.end();
+        respondWith(res, mime.mimeTypes.html, 405, 'Method Not Allowed');
     }
 });
 
@@ -126,4 +136,14 @@ const readRequestPromise = req => {
             resolve(data);
         })
     });
+};
+
+const respondWithNotFound = (res) => {
+    respondWith(res, mime.mimeTypes.html, 404, 'Not Found');
+};
+
+const respondWith = (res, mimeType, errorCode, errorMessage) => {
+    res.setHeader('Content-type', mimeType);
+    res.writeHead(errorCode, errorMessage);
+    res.end();
 };

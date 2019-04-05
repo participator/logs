@@ -19,7 +19,7 @@ const callDB = (collectionName, url, reqData) => {
         console.log('[requestCreatesData]', reqData.toString());
         let {userId, data} = JSON.parse(reqData);
 
-        return dbCreates.insertLogs(collectionName, data, userId).then(commandResult => {
+        return dbCreates.insertLog(collectionName, data, userId).then(commandResult => {
             const insertedDocuments = commandResult.ops.map(document => {
                 document._id = document._id.toString();
                 return document;

@@ -28,6 +28,24 @@ const insertDocuments = function(db, collectionName, documents) {
 /**
  * Insert documents into given collection with for given user
  * @param {string} collectionName 
+ * @param {Object} document
+ */
+const insertLog = (collectionName, document, _userId) => {
+    const log = Object.create(logModel);
+    log.init(new objectId(_userId), document.title);
+    log.description = document.description;
+    log.helpfulResources = document.helpfulResources;
+    log.status = document.status;
+    log.type = document.type;
+
+    return dbConnect(collectionName, insertDocuments, log).catch(err => {
+        throw err;
+    });
+};
+
+/**
+ * Insert documents into given collection with for given user
+ * @param {string} collectionName 
  * @param {Object[]} documents 
  */
 const insertLogs = (collectionName, documents, _userId) => {
@@ -47,5 +65,5 @@ const insertLogs = (collectionName, documents, _userId) => {
 };
 
 module.exports = {
-    insertLogs
+    insertLog
 };

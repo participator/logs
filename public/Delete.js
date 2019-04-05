@@ -1,15 +1,21 @@
 (function(undefined) {
     
-    if (!window.Log) return;
-    if (!window.Log.App) return;
+    if (!window.Log) throw new Error('Log library is not loaded');
+    if (!window.Log.App) throw new Error('App library is not loaded');
+    if (!window.Log.Error) throw new Error('Error library is not loaded');
 
     const exports = {};
     window.Log.App.Delete = exports;
 
     exports.deleteLog = id => {
-        deleteData('http://localhost:8081/delete/log', id).then(response => {
+        deleteData('http://localhost:8081/delete/log', id)
+        .then(response => {
             if (response === true) {
-                // remove log from DOM
+                const deleted = document.querySelector(`li[data-id="${id}"]`);
+                deleted.remove();
+            }
+            else if (response === false) {
+                console.log('Unable to delete');
             }
         })
     }
@@ -19,6 +25,7 @@
             method: 'DELETE',
             mode: 'cors',
             body: JSON.stringify({userId: window.Log.userId, id: id})
-        });
+        })
+        .then(response => response.json());
     };
 })()
