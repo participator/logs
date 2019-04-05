@@ -1,8 +1,9 @@
-const assert = require('assert'),
-dbConnect = require('./dbConnect');
+// npm Packages
+const objectId = require('mongodb').ObjectID,
+assert = require('assert');
 
-// Use connect method to connect to the db server
-dbConnect.connect(updateDocument);
+// Custom Packages
+const dbConnect = require('./dbConnect');
 
 /**
  * Update a document
@@ -11,18 +12,29 @@ dbConnect.connect(updateDocument);
  * @param {Function} callback 
  * @returns {undefined}
  */
-const updateDocument = (db, document, callback) => {
-
+const updateDocument = (db, collectionName, document) => {
+    
+    /**
+     * updateOne
+     * @param {Object} filter 
+     * @param {Object} update
+     * @param {Object} options
+     */
+    const {userId, id} = document,
+    filter = {_userId: new objectId(userId), _id: new object(id)},
+    update = {
+        $setOnInsert: document,
+        $currentDate: {
+            lastModified: true,
+            modifiedDate: { $type: "timestamp" }
+        }
+    }
+    options = { upsert: false };
+    
     // Get the documents collection
-    const collection = db.collection('documents');
-
-    // Update document where a is 2, set b equal to 1
-    collection.updateOne({ a: 2}, { $set: { b: 1 } }, (err, result) => {
-        assert.equal(err, null);
-        assert.equal(1, result.result.n);
-        console.log('Updated the document with the field a equal to 2');
-        callback(result);
-    });
+    const collection = db.collection(collectionName);
+    
+    return collection.updateOne(filter, update, options);
 };
 
 /**
@@ -30,8 +42,9 @@ const updateDocument = (db, document, callback) => {
  * @param {*} document - criteria of document to update
  * @returns {undefined}
  */
-const update = (document) => {
-    dbConnect(updateDocument, document);
+const update = (collectionName, document, userId) => {
+    document.userId = userId;
+    dbConnect(collectionName, updateDocument, document);
 }
 
 module.exports = {

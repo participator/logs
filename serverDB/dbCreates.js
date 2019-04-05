@@ -26,13 +26,13 @@ const insertDocuments = function(db, collectionName, documents) {
 }
 
 /**
- * Insert documents into given collection with for given user
+ * Insert document into given collection with for given user
  * @param {string} collectionName 
  * @param {Object} document
  */
-const insertLog = (collectionName, document, _userId) => {
+const insertLog = (collectionName, document, userId) => {
     const log = Object.create(logModel);
-    log.init(new objectId(_userId), document.title);
+    log.init(new objectId(userId), document.title);
     log.description = document.description;
     log.helpfulResources = document.helpfulResources;
     log.status = document.status;

@@ -1,8 +1,7 @@
 // Custom Packages
 const dbCreates = require('./dbCreates'),
 routesCreates = require('./routes').routes.creates,
-matchIdsRegExpString = require('./routes').matchIdsRegExpString,
-mime = require('../utils/mime');
+matchIdsRegExpString = require('./routes').matchIdsRegExpString;
 
 /**
  * Call database
@@ -38,11 +37,9 @@ const callDB = (collectionName, url, reqData) => {
         const ids = url.match(matchIdsRegExpString);
         const reqObj = JSON.parse(req);
         console.log('[reqObj]', reqObj);
-        return dbCreates.userInsert(collectionName, reqData, ids[0]).then(results => {
-            res.setHeader('Content-Type', mime.mimeTypes.json);
-            res.write(JSON.stringify(results));
-            res.end();
-        }).catch(err => {
+        return dbCreates.userInsert(collectionName, reqData, ids[0])
+        .then(results => results)
+        .catch(err => {
             throw err;
         });
     }

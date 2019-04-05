@@ -177,7 +177,6 @@
         // Add See task to actions
         const tasks = document.createElement('button');
         tasks.dataset.id = log._id;
-        tasks.setAttribute('id', log._id);
         tasks.append('See Tasks');
         actions.appendChild(tasks);
         
