@@ -23,7 +23,7 @@ const findDocuments = (db, collectionName, document) => {
  * @returns {Promise} - Promise of documents
  */
 const findAll = (collectionName) => {
-    return dbConnect(findDocuments, collectionName).catch(err => {
+    return dbConnect(collectionName, findDocuments).catch(err => {
         throw err;
     });
 };
@@ -37,7 +37,9 @@ const findAll = (collectionName) => {
 const userFindAll = (collectionName, _userId) => {
     const user = {_userId: _userId};
     console.log('[userFindAll] _id:', user);
-    return dbConnect(findDocuments, collectionName, user);
+    return dbConnect(collectionName, findDocuments, user).catch(err => {
+        throw err;
+    });
 };
 
 /**
@@ -47,7 +49,9 @@ const userFindAll = (collectionName, _userId) => {
  * @returns {Promise} - Promise of documents
  */
 const findSpecific = (collectionName, document) => {
-    return dbConnect(findDocuments, collectionName, document);
+    return dbConnect(collectionName, findDocuments, document).catch(err => {
+        throw err;
+    });
 }
 
 /**
@@ -59,7 +63,9 @@ const findSpecific = (collectionName, document) => {
  */
 const userFindSpecific = (collectionName, document, _userId) => {
     const doc = {...document, _userId: _userId};
-    return dbConnect(findDocuments, collectionName, doc);
+    return dbConnect(collectionName, findDocuments, doc).catch(err => {
+        throw err;
+    });
 }
 
 module.exports = {

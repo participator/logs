@@ -112,15 +112,34 @@
         return logsElement;
     };
 
+    /**
+     * Create the HTMLLIElement for a log
+     * @param {Object} log data
+     * @retuns HTMLLIElement
+     */
     exports.createLogElement = log => {
 
         const logElement = document.createElement('li');
-        logElement.setAttribute('data-id', log._id);
+        logElement.dataset.id = log._id;
+
+        // Delete Actions
+        let deleteElement = document.createElement('button');
+        deleteElement.dataset.id = log._id;
+        deleteElement.innerText = 'X';
+        deleteElement.classList.add('logs_delete');
+        deleteElement.addEventListener('click', event => {
+            exports.Delete.deleteLog(event.target.dataset.id);
+        });
+        logElement.appendChild(deleteElement);
 
         // Add title
         let title = document.createElement('h2');
         title.innerText = log.title;
         logElement.appendChild(title);
+
+        let description = document.createElement('p');
+        description.innerText = log.description;
+        logElement.appendChild(description);
 
         // Add Helplful Resources
         if (log.helpfulResources && log.helpfulResources.length > 0) {
@@ -145,18 +164,19 @@
 
         // Add update to actions
         const update = document.createElement('button');
-        update.setAttribute('id', log._id);
+        update.dataset.id = log._id;
         update.append('Update Log');
         actions.appendChild(update);
 
         // Add history to actions
         const history = document.createElement('button');
-        history.setAttribute('id', log._id);
+        history.dataset.id = log._id;
         history.append('See History');
         actions.appendChild(history);
 
         // Add See task to actions
         const tasks = document.createElement('button');
+        tasks.dataset.id = log._id;
         tasks.setAttribute('id', log._id);
         tasks.append('See Tasks');
         actions.appendChild(tasks);

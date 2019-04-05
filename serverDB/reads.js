@@ -2,10 +2,9 @@
 const objectId = require('mongodb').ObjectID;
 
 // Custom Packages
-const dbRead = require('./dbRead'),
-routesRead = require('./routes').routes.read,
-matchIdsRegExpString = require('./routes').matchIdsRegExpString,
-mime = require('../utils/mime');
+const dbReads = require('./dbReads'),
+routesReads = require('./routes').routes.reads,
+matchIdsRegExpString = require('./routes').matchIdsRegExpString;
 
 /**
  * Call database
@@ -17,9 +16,9 @@ const callDB = (collectionName, url) => {
     /**
      * /read/all
      */
-    if (routesRead.all.test(url)) {
+    if (routesReads.all.test(url)) {
         console.log('[read all]', url);
-        return dbRead.all(collectionName)
+        return dbReads.all(collectionName)
         .catch(err => {
             throw err;
         });
@@ -28,9 +27,9 @@ const callDB = (collectionName, url) => {
      * /read/{_userId}
      * /read/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesRead.userAll.test(url)) {
+    else if (routesReads.userAll.test(url)) {
         const ids = url.match(matchIdsRegExpString);
-        return dbRead.userAll(collectionName, new objectId(ids[0]))
+        return dbReads.userAll(collectionName, new objectId(ids[0]))
         .catch(err => {
             throw err;
         });
@@ -39,9 +38,9 @@ const callDB = (collectionName, url) => {
      * /read/log/{_logId}
      * /read/log/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesRead.specific.test(req.url)) {
+    else if (routesReads.specific.test(req.url)) {
         const ids = req.url.match(matchIdsRegExpString);
-        return dbRead.specific(collectionName, {'_id': new objectId(ids[0])})
+        return dbReads.specific(collectionName, {'_id': new objectId(ids[0])})
         .catch(err => {
             throw err;
         });
@@ -50,10 +49,10 @@ const callDB = (collectionName, url) => {
      * /read/{_userId}/log/{_logId}
      * /read/xxxxxxxxxxxxxxxxxxxxxxxx/log/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesRead.userSpecific.test(req.url)) {
+    else if (routesReads.userSpecific.test(req.url)) {
         const ids = req.url.match(matchIdsRegExpString);
         console.log('[userSpecific] ids', JSON.stringify(ids));
-        return dbRead.userSpecific(collectionName, {'_id': new objectId(ids[1])}, new objectId(ids[0]))
+        return dbReads.userSpecific(collectionName, {'_id': new objectId(ids[1])}, new objectId(ids[0]))
         .catch(err => {
             return err;
         });
@@ -73,9 +72,9 @@ module.exports = {
      * @param {string} url 
      */
     isRouteMatch(url) {
-        return routesRead.all.test(url)
-        || routesRead.userAll.test(url)
-        || routesRead.specific.test(url)
-        || routesRead.userSpecific.test(url);
+        return routesReads.all.test(url)
+        || routesReads.userAll.test(url)
+        || routesReads.specific.test(url)
+        || routesReads.userSpecific.test(url);
     }
 };

@@ -2,8 +2,8 @@
 const objectId = require('mongodb').ObjectID;
 
 // Custom Packages
-const dbCreate = require('./dbCreate'),
-routesCreate = require('./routes').routes.create,
+const dbDeletes = require('./dbDeletes'),
+routesDeletes = require('./routes').routes.deletes,
 matchIdsRegExpString = require('./routes').matchIdsRegExpString,
 mime = require('../utils/mime');
 
@@ -16,32 +16,29 @@ mime = require('../utils/mime');
  */
 const callDB = (collectionName, url, reqData) => {
     /**
-     * /create
+     * /delete/log
      */
-    if (routesCreate.log.test(url)) {
-        console.log('[requestCreateData]', reqData.toString());
-        let {userId, data} = JSON.parse(reqData);
+    if (routesDeletes.log.test(url)) {
+        console.log('[requestDeleteData]', reqData.toString());
+        let {userId, id} = JSON.parse(reqData);
 
-        return dbCreate.insertLog(collectionName, data, userId).then(commandResult => {
-            const insertedDocuments = commandResult.ops.map(document => {
-                document._id = document._id.toString();
-                return document;
-            });
+        return dbDeletes.deletes(collectionName, userId, id).then(commandResult => {
+            const deleted = commandResult.deletedCount > 0;
 
-            return insertedDocuments;
+            return deleted;
         }).catch(err => {
             throw err;
         });
     }
 
     /**
-     * /create/error
+     * /delete/error
      */
-    else if (routesCreate.error.test(url)) {
+    else if (routesDeletes.error.test(url)) {
         const ids = url.match(matchIdsRegExpString);
         const reqObj = JSON.parse(req);
         console.log('[reqObj]', reqObj);
-        return dbCreate.userInsert(collectionName, reqData, new objectId(ids[0])).then(results => {
+        return dbDeletes.userInsert(collectionName, reqData, new objectId(ids[0])).then(results => {
             res.setHeader('Content-Type', mime.mimeTypes.json);
             res.write(JSON.stringify(results));
             res.end();
@@ -64,7 +61,7 @@ module.exports = {
      * @param {string} url 
      */
     isRouteMatch(url) {
-        return routesCreate.log.test(url)
-        || routesCreate.error.test(url);
+        return routesDeletes.log.test(url)
+        || routesDeletes.error.test(url);
     }
 };

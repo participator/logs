@@ -17,7 +17,7 @@ const dbName = 'Log';
  * @param { Object } operationCallback - CRUD operation callback
  * @returns { Promise }
  */
-const dbConnect = (operationCallback, collectionName, data) => {
+const dbConnect = (collectionName, operationCallback, data) => {
     return MongoClient.connect(url, { useNewUrlParser: true }).then((client) => {
         // assert.equal(null, err);
         console.log('Connected successfully to db server');

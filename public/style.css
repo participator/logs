@@ -50,6 +50,14 @@ ul.logs ul {
     list-style-type: none;
     padding: 0;
 }
+.logs_delete {
+    border: none;
+    float: right;
+    background-color: buttonface;
+}
+.logs_delete:hover {
+    background-color: grey;
+}
 ul.logs>li {
     border: black solid 1px;
     margin: 1em;

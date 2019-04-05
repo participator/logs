@@ -3,8 +3,10 @@ const http = require('http');
 const process = require('process');
 
 // Custom Packages
-const read = require('./read'),
-create = require('./create');
+const mime = require('../utils/mime'),
+reads = require('./reads'),
+creates = require('./creates'),
+deletes = require('./deletes');
 
 // Constants
 const port = process.env.port || 8081;
@@ -18,11 +20,14 @@ const port = process.env.port || 8081;
  */
 const server = http.createServer((req, res) => {
     console.log('[requested url]', req.url);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    if (read.isRouteMatch(req.url)) {
-        read.callDB('Logs', req.url)
+    res.setHeader('Access-Control-Max-Age', '-1');
+    if (reads.isRouteMatch(req.url)) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Method', 'GET');
+        reads.callDB('Logs', req.url)
         .then(dbResponse => {
             // console.log('[read dbResponse]', dbResponse.length);
+            res.setHeader('Content-Type', mime.mimeTypes.json);
             res.write(JSON.stringify(dbResponse));
             res.end();
         })
@@ -40,15 +45,17 @@ const server = http.createServer((req, res) => {
             }
         });
     }
-    else if (create.isRouteMatch(req.url)) {
-        console.log('[requested url]', req.url);
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'POST');
+    else if (creates.isRouteMatch(req.url)) {
+        if (req.method === 'OPTIONS') {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'POST');
+        }
         readRequestPromise(req).then(data => {
-            return create.callDB('Logs', req.url, data);
+            return creates.callDB('Logs', req.url, data);
         })
         .then(dbResponse => {
             // console.log('[create dbResponse]', dbResponse.length);
+            res.setHeader('Content-Type', mime.mimeTypes.json);
             res.write(JSON.stringify(dbResponse));
             res.end();
         })
@@ -61,6 +68,35 @@ const server = http.createServer((req, res) => {
             }
             else {
                 console.error('[create db failure]', err.message);
+                res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
+                res.end();
+            }
+        });
+    }
+    else if (deletes.isRouteMatch(req.url)) {
+        if (req.method === 'OPTIONS') {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'DELETE');
+            res.end();
+        }
+        readRequestPromise(req).then(data => {
+            return deletes.callDB('Logs', req.url, data);
+        })
+        .then(dbResponse => {
+            console.log('[delete dbResponse]', dbResponse);
+            res.setHeader('Content-Type', mime.mimeTypes.json);
+            res.write(JSON.stringify(dbResponse));
+            res.end();
+        })
+        .catch(err => {
+            if (err.message === 'Not Found') {
+                console.error('[delete Not Found]', err.message);
+                res.setHeader('Content-Type', mime.mimeTypes.html);
+                res.writeHead(404, err.message);
+                res.end();
+            }
+            else {
+                console.error('[delete db failure]', err.message);
                 res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
                 res.end();
             }
