@@ -19,15 +19,10 @@ const callDB = (collectionName, url, reqData) => {
         let {userId, data} = JSON.parse(reqData);
 
         return dbUpdates.update(collectionName, data, userId).then(commandResult => {
-            const insertedDocuments = commandResult.ops.map(document => {
-                document._id = document._id.toString();
-                return document;
-            });
+            const {matchedCount, modifiedCount} = commandResult;
 
-            return insertedDocuments;
-        }).catch(err => {
-            throw err;
-        });
+            return matchedCount === modifiedCount;
+        })
     }
 
     /**
@@ -39,9 +34,6 @@ const callDB = (collectionName, url, reqData) => {
         console.log('[reqObj]', reqObj);
         return dbUpdates.userInsert(collectionName, reqData, ids[0])
         .then(results => results)
-        .catch(err => {
-            throw err;
-        });
     }
     /**
      * Invalid path - display to user not found

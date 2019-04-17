@@ -8,9 +8,9 @@ const dbConnect = require('./dbConnect');
 /**
  * Update a document
  * @param {*} db 
- * @param {*} document - update where field is equal to value e.g. { _userId: 12345 }
- * @param {Function} callback 
- * @returns {undefined}
+ * @param {string} collectionName - name of the collection to update a document in
+ * @param {Object} document - object with new data to add
+ * @returns {<Promise>}
  */
 const updateDocument = (db, collectionName, document) => {
     
@@ -20,15 +20,16 @@ const updateDocument = (db, collectionName, document) => {
      * @param {Object} update
      * @param {Object} options
      */
-    const {userId, id} = document,
-    filter = {_userId: new objectId(userId), _id: new object(id)},
+    const {_userId, _id} = document,
+    filter = {_userId, _id},
     update = {
-        $setOnInsert: document,
+        $set: document,
         $currentDate: {
-            lastModified: true,
-            modifiedDate: { $type: "timestamp" }
+            modifiedDate: { $type: 'date' }
         }
-    }
+    },
+    // upsert: true - creates a new document when no match is found
+    // upsert: false - do not insert a new document when a match is not found
     options = { upsert: false };
     
     // Get the documents collection
@@ -40,11 +41,13 @@ const updateDocument = (db, collectionName, document) => {
 /**
  * 
  * @param {*} document - criteria of document to update
- * @returns {undefined}
+ * @returns {<Promise>}
  */
 const update = (collectionName, document, userId) => {
-    document.userId = userId;
-    dbConnect(collectionName, updateDocument, document);
+    document._userId = new objectId(userId.trim());
+    document._id = new objectId(document.id.trim());
+    delete document.id;
+    return dbConnect(collectionName, updateDocument, document);
 }
 
 module.exports = {

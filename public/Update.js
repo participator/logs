@@ -1,45 +1,48 @@
 (function(undefined) {
-
-    const userId = window.Log.userId;
     
     if (!window.Log) throw new Error('Log library is not loaded');
     if (!window.Log.App) throw new Error('App library is not loaded');
     if (!window.Log.App.Shared) throw new Error('App Shared library is not loaded');
+    if (!window.Log.Error) throw new Error('Error library is not loaded');
 
-    const App = window.Log.App;
     const Shared = window.Log.App.Shared;
-        
-    const createButton = document.getElementById('create');
+
+    const exports = {};
+    window.Log.App.Update = exports;
 
     let createForm;
-    createButton.addEventListener('click', () => {
-        const createFormParentElement = document.getElementById('createForm');
+    exports.createUpdateForm = (id) => {
+        const updateFormParentElement = document.getElementById('updateForm');
         
         if (!createForm) {
-            createForm = Shared.makeCreateForm(createFormParentElement, {
-                id: 'createLog',
+            createForm = Shared.makeCreateForm(updateFormParentElement, {
+                id: 'updateLog',
                 enctype: 'multipart/form-data',
-                method: 'post'
-            }, 'Create Log', submitEventHandler);
+                method: 'UPDATE'
+            }, 'Update Log', submitEventHandler, id);
         }
         
-        createFormParentElement.appendChild(createForm.header);
-        createFormParentElement.appendChild(createForm.form);
-        createFormParentElement.hidden = false;
-    });
+        updateFormParentElement.appendChild(createForm.header);
+        updateFormParentElement.appendChild(createForm.form);
+        updateFormParentElement.hidden = false;
+    }
 
-    const submitEventHandler = event => {
+    const submitEventHandler = (event, logId) => {
         const fd = new FormData(event.target.form);
 
-            const url = 'http://localhost:8081/creates/log';
+            const url = 'http://localhost:8081/updates/log';
             const submittedValues = {};
+            
+            // Add log id to formData object
+            fd.set('id', logId);
             for(keyValueArr of fd) {
                 submittedValues[keyValueArr[0]] = keyValueArr[1];
             }
 
             console.log('[create event form]', fd);
-            fetch(url, {
-                method: 'POST',
+            
+            return fetch(url, {
+                method: 'UPDATE',
                 mode: 'cors',
                 body: JSON.stringify({userId: window.Log.userId, data:submittedValues})
             })

@@ -17,32 +17,35 @@ const routes = {
      * _userId is passed in the body
      */
     creates: {
-        error: new RegExp('^/create/error$'),
-        log: new RegExp('^/create/log$'),
-        logHistory: new RegExp(`^/create/log/history$`),
-        task: new RegExp(`^/create/task$`),
-        taskHistory: new RegExp(`^/create/task/history$`),
-        user: new RegExp(`^/create/user$`)
+        error: new RegExp('^/creates/error$'),
+        log: new RegExp('^/creates/log$'),
+        logHistory: new RegExp(`^/creates/log/history$`),
+        task: new RegExp(`^/creates/task$`),
+        taskHistory: new RegExp(`^/creates/task/history$`),
+        user: new RegExp(`^/creates/user$`)
     },
     reads: {
-        all: new RegExp('^/read/all$'),
-        specific: new RegExp(`^/read/log/${matchIdsString}$`),
-        userAll: new RegExp(`^/read/${matchIdsString}$`),
-        userSpecific: new RegExp(`^/read/${matchIdsString}/log/${matchIdsString}`)
+        error: new RegExp('^/reads/error$'),
+        all: new RegExp('^/reads/all$'),
+        specific: new RegExp(`^/reads/log/${matchIdsString}$`),
+        userAll: new RegExp(`^/reads/${matchIdsString}$`),
+        userSpecific: new RegExp(`^/reads/${matchIdsString}/log/${matchIdsString}`)
     },
     updates: {
-        log: new RegExp(`^/update/log$`),
-        logHistory: new RegExp(`^/update/log/history$`),
-        task: new RegExp(`^/update/task$`),
-        taskHistory: new RegExp(`^/update/task/history$`),
-        user: new RegExp(`^/update/user`)
+        error: new RegExp('^/updates/error$'),
+        log: new RegExp(`^/updates/log$`),
+        logHistory: new RegExp(`^/updates/log/history$`),
+        task: new RegExp(`^/updates/task$`),
+        taskHistory: new RegExp(`^/updates/task/history$`),
+        user: new RegExp(`^/updates/user`)
     },
     deletes: {
-        log: new RegExp(`^/delete/log$`),
-        logHistory: new RegExp(`^/delete/log/history$`),
-        task: new RegExp(`^/delete/task$`),
-        taskHistory: new RegExp(`^/delete/task/history$`),
-        user: new RegExp(`^/delete/user$`)
+        error: new RegExp('^/deletes/error$'),
+        log: new RegExp(`^/deletes/log$`),
+        logHistory: new RegExp(`^/deletes/log/history$`),
+        task: new RegExp(`^/deletes/task$`),
+        taskHistory: new RegExp(`^/deletes/task/history$`),
+        user: new RegExp(`^/deletes/user$`)
     }
 
 }

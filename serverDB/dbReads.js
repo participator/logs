@@ -1,5 +1,6 @@
 const assert = require('assert'),
-dbConnect = require('./dbConnect');
+dbConnect = require('./dbConnect'),
+ObjectId = require('mongodb').ObjectId;
 
 /**
  * Find all documents
@@ -23,7 +24,14 @@ const findDocuments = (db, collectionName, document) => {
  * @returns {Promise} - Promise of documents
  */
 const findAll = (collectionName) => {
-    return dbConnect(collectionName, findDocuments).catch(err => {
+    return dbConnect(collectionName, findDocuments).then(data => {
+        return data.map(log => {
+            // Extract createDate from _id
+            log.createdDate = ObjectId(log._id).getTimestamp();
+            return log;
+        });
+    })
+    .catch(err => {
         throw err;
     });
 };

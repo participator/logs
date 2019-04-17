@@ -21,7 +21,7 @@ const port = process.env.port || 8081;
  */
 const server = http.createServer((req, res) => {
     console.log('[requested url]', req.url);
-    // res.setHeader('Access-Control-Max-Age', '-1');
+
     if (req.method === 'GET') {
         // Set Response Headers
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,11 +37,11 @@ const server = http.createServer((req, res) => {
             })
             .catch(err => {
                 if (err.message === 'Not Found') {
-                    console.error('[read Not Found]', err.message);
+                    console.error('[read Not Found]', err);
                     respondWithNotFound(res);
                 }
                 else {
-                    console.error('[read db failure]', err.message);
+                    console.error('[read db failure]', err);
                     res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
                     res.end();
                 }
@@ -67,11 +67,11 @@ const server = http.createServer((req, res) => {
             })
             .catch(err => {
                 if (err.message === 'Not Found') {
-                    console.error('[create Not Found]', err.message);
+                    console.error('[create Not Found]', err);
                     respondWithNotFound(res);
                 }
                 else {
-                    console.error('[create db failure]', err.message);
+                    console.error('[create db failure]', err);
                     res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
                     res.end();
                 }
@@ -87,11 +87,11 @@ const server = http.createServer((req, res) => {
             })
             .catch(err => {
                 if (err.message === 'Not Found') {
-                    console.error('[delete Not Found]', err.message);
+                    console.error('[delete Not Found]', err);
                     respondWithNotFound(res);
                 }
                 else {
-                    console.error('[delete db failure]', err.message);
+                    console.error('[delete db failure]', err);
                     res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
                     res.end();
                 }
@@ -107,11 +107,11 @@ const server = http.createServer((req, res) => {
             })
             .catch(err => {
                 if (err.message === 'Not Found') {
-                    console.error('[delete Not Found]', err.message);
+                    console.error('[delete Not Found]', err);
                     respondWithNotFound(res);
                 }
                 else {
-                    console.error('[delete db failure]', err.message);
+                    console.error('[delete db failure]', err);
                     res.writeHead(500, 'The server has encountered a situation it doesn\'t know how to handle.');
                     res.end();
                 }
@@ -123,7 +123,7 @@ const server = http.createServer((req, res) => {
     }
     else if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'DELETE');
+        res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, DELETE, UPDATE');
         res.end();
     }
     else {

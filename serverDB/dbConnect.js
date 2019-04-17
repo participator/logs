@@ -24,15 +24,13 @@ const dbConnect = (collectionName, operationCallback, data) => {
     
         const db = client.db(dbName);
         
-        return operationCallback(db, collectionName, data).then(data => {
+        return operationCallback(db, collectionName, data).then(commandResult => {
             client.close();
-            return data;
+            return commandResult;
         });
     }, err => {
         throw err;
-    }).catch(err => {
-        throw err;
-    });
+    })
 };
 
 module.exports = dbConnect;

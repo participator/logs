@@ -1,7 +1,7 @@
 (function(undefined) {
 
     if (!window.Log) window.Log = {};
-    if (window.Log.App) throw new Error('Name collision with Log package');
+    if (window.Log.App) throw new Error('Name collision with Log\'s App package');
     
     const exports = {};
     window.Log.App = exports;
@@ -24,7 +24,7 @@
         // });
 
         const host = '//localhost:8081';
-        fetchLogs(host + '/read/all').then(data => {
+        fetchLogs(host + '/reads/all').then(data => {
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
@@ -166,6 +166,12 @@
         const update = document.createElement('button');
         update.dataset.id = log._id;
         update.append('Update Log');
+        update.addEventListener('click', event => {
+            const Update = window.Log.App.Update;
+            const target = event.target;
+            console.log('[Update.createUpdateForm]', Update.createUpdateForm)
+            Update.createUpdateForm(target.dataset.id);
+        });
         actions.appendChild(update);
 
         // Add history to actions

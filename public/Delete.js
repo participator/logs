@@ -8,7 +8,7 @@
     window.Log.App.Delete = exports;
 
     exports.deleteLog = id => {
-        deleteData('http://localhost:8081/delete/log', id)
+        deleteData('http://localhost:8081/deletes/log', id)
         .then(response => {
             if (response === true) {
                 const deleted = document.querySelector(`li[data-id="${id}"]`);
