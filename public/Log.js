@@ -126,7 +126,7 @@
         let deleteElement = document.createElement('button');
         deleteElement.dataset.id = log._id;
         deleteElement.innerText = 'X';
-        deleteElement.classList.add('logs_delete');
+        deleteElement.classList.add('log_delete');
         deleteElement.addEventListener('click', event => {
             exports.Delete.deleteLog(event.target.dataset.id);
         });
@@ -135,10 +135,12 @@
         // Add title
         let title = document.createElement('h2');
         title.innerText = log.title;
+        title.dataset.name = 'title';
         logElement.appendChild(title);
 
         let description = document.createElement('p');
         description.innerText = log.description;
+        description.dataset.name = 'description';
         logElement.appendChild(description);
 
         // Add Helplful Resources
@@ -156,11 +158,21 @@
         // Add status
         const status = document.createElement('p');
         status.append('Status ');
-        status.append(log.status);
+        const statusValue = document.createElement('span');
+        statusValue.append(log.status);
+        statusValue.dataset.name = 'status';
+        status.append(statusValue);
         logElement.appendChild(status);
+
+        // Add type
+        const type = document.createElement('span');
+        type.classList.add('log_type');
+        type.append(log.type);
+        logElement.appendChild(type);
 
         // Add action buttons
         const actions = document.createElement('div');
+        actions.classList.add('log_actions');
 
         // Add update to actions
         const update = document.createElement('button');
@@ -169,7 +181,6 @@
         update.addEventListener('click', event => {
             const Update = window.Log.App.Update;
             const target = event.target;
-            console.log('[Update.createUpdateForm]', Update.createUpdateForm)
             Update.createUpdateForm(target.dataset.id);
         });
         actions.appendChild(update);
@@ -199,6 +210,7 @@
      */
     const createHelpfulResourcesElement = helpfulResources => {
         const helpfulResourcesElement = document.createElement('ul');
+        helpfulResourcesElement.classList.add('log_helpfulResources');
 
         helpfulResources.forEach(helpfulResource => {
             helpfulResourcesElement.appendChild(createHelpfulResourceElement(helpfulResource));
@@ -209,6 +221,7 @@
 
     const createHelpfulResourceElement = helpfulResource => {
         const element = document.createElement('li');
+        element.classList.add('log_helpfulResource');
         
         const link = document.createElement('a');
         link.href = helpfulResource.url;

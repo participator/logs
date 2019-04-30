@@ -4,6 +4,9 @@
 :root {
     --red: rgb(178, 34, 34);
     --red-transparent: rgb(178, 34, 34, 0.9);
+    --secondary-button: buttonface;
+    --primary-button: buttonface;
+    --tag: buttonface;
 }
 body {
     padding: 0;
@@ -45,17 +48,17 @@ main {
     margin-bottom: 2em;
     margin-top: 3em;
 }
-ul.logs,
-ul.logs ul {
+.logs,
+.log_helpfulResources {
     list-style-type: none;
     padding: 0;
 }
-.logs_delete {
+.log_delete {
     border: none;
     float: right;
     background-color: buttonface;
 }
-.logs_delete:hover {
+.log_delete:hover {
     background-color: grey;
 }
 ul.logs>li {
@@ -63,15 +66,23 @@ ul.logs>li {
     margin: 1em;
     padding: 1em;
 }
-ul.logs ul {
+.log_helpfulResources {
     display: flex;
     justify-content: start;
     flex-direction: row;
     flex-wrap: wrap;
 }
-ul.logs ul li {
+.log_helpfulResource {
     margin: 0.2em 0.5em;
     width: 40%;
+}
+.log_type {
+    background-color: var(--tag);
+    display: inline-block;
+    padding: 5px;
+}
+.log_actions {
+    margin: 1em auto;
 }
 #create {
     background-color: var(--red-transparent);

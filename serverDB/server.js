@@ -51,10 +51,9 @@ const server = http.createServer((req, res) => {
             respondWithNotFound(res);
         }
     }
-    else if (['POST', 'DELETE', 'UPDATE'].includes(req.method)) {
+    else if (['POST', 'DELETE', 'PUT'].includes(req.method)) {
         // Set Response Headers
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-        res.setHeader('Access-Control-Allow-Methods', req.method);
+        res.setHeader('Access-Control-Allow-Origin', '*');
 
         if (creates.isRouteMatch(req.url)) {
             readRequestPromise(req)
@@ -123,7 +122,9 @@ const server = http.createServer((req, res) => {
     }
     else if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, DELETE, UPDATE');
+        res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, DELETE, PUT');
+        res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type');
+        res.setHeader('Access-Control-Max-Age', 0);
         res.end();
     }
     else {

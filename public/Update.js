@@ -23,7 +23,7 @@
         }
         
         updateFormParentElement.appendChild(createForm.header);
-        updateFormParentElement.appendChild(createForm.form);
+        updateFormParentElement.appendChild(mapLogData(id, createForm.form));
         updateFormParentElement.hidden = false;
     }
 
@@ -42,9 +42,12 @@
             console.log('[create event form]', fd);
             
             return fetch(url, {
-                method: 'UPDATE',
+                method: 'PUT',
                 mode: 'cors',
-                body: JSON.stringify({userId: window.Log.userId, data:submittedValues})
+                body: JSON.stringify({userId: window.Log.userId, data:submittedValues}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -59,4 +62,19 @@
                 // Show error on UI
             });
     };
+
+    const mapLogData = (id, form) => {
+        const log = document.querySelector(`.logs li[data-id="${id}"]`);
+
+        for( var elem of form.elements ) {
+            log.childNodes.forEach(l => {
+                if (l.dataset.name === elem.name) {
+                    elem.value = l.textContent;
+                }
+            })
+        }
+
+        return form;
+    };
+    
 })()
