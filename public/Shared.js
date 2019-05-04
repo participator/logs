@@ -4,7 +4,7 @@
     
     const exports = {};
     window.Log.App.Shared = exports;
-
+    
     /**
      * Makes a log form to submit to the server
      * @param {HTMLElement} formParentElement - element to enter form into
@@ -33,6 +33,12 @@
         const descriptionElement = createFormTextAreaElement('description', 'Description');
         descriptionElement.lastElementChild.classList.add('createForm_description');
         form.appendChild(descriptionElement);
+
+        const helpfulResourcesElement = document.createElement('div');
+        helpfulResourcesElement.classList.add('createForm_helpfulResources');
+        const addHelpfulResourceButton = createAddHelpfulResourceButton(helpfulResourcesElement);
+        form.appendChild(helpfulResourcesElement);
+        form.appendChild(addHelpfulResourceButton);
 
         const statusElement = createFormSelectElement('status', 'Status');
         statusElement.lastElementChild.options.add(new Option('In Progress', 'InProgress'));
@@ -169,5 +175,36 @@
         label.appendChild(element);
 
         return label;
+    }
+
+    const createAddHelpfulResourceButton = (parentElement) => {
+        const addHelpfulResourceButton = document.createElement('button');
+        addHelpfulResourceButton.innerText = 'Add a Resource';
+        addHelpfulResourceButton.type = 'button';
+
+        addHelpfulResourceButton.addEventListener('click', () => {
+            const container = document.createElement('div');
+            // title
+            const titleInputElement = document.createElement('input');
+            titleInputElement.placeholder = 'Add title of resource here';
+            titleInputElement.type = 'text';
+            container.appendChild(titleInputElement);
+
+            // link
+            const linkInputElement = document.createElement('input');
+            linkInputElement.placeholder = 'Add link to this resource here';
+            linkInputElement.type = 'text';
+            container.appendChild(linkInputElement);
+
+            // description
+            const descriptionInputElement = document.createElement('input');
+            descriptionInputElement.placeholder = 'How is this useful?';
+            descriptionInputElement.type = 'text';
+            container.appendChild(descriptionInputElement);
+
+            parentElement.appendChild(container);
+        });
+
+        return addHelpfulResourceButton;
     }
 })();

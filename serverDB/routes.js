@@ -26,10 +26,11 @@ const routes = {
     },
     reads: {
         error: new RegExp('^/reads/error$'),
-        all: new RegExp('^/reads/all$'),
+        logs: new RegExp('^/reads/logs$'),
+        task: new RegExp('^/reads/tasks$'),
         specific: new RegExp(`^/reads/log/${matchIdsString}$`),
-        userAll: new RegExp(`^/reads/${matchIdsString}$`),
-        userSpecific: new RegExp(`^/reads/${matchIdsString}/log/${matchIdsString}`)
+        userLogs: new RegExp(`^/reads/${matchIdsString}$`),
+        userLog: new RegExp(`^/reads/${matchIdsString}/log/${matchIdsString}`)
     },
     updates: {
         error: new RegExp('^/updates/error$'),
@@ -37,7 +38,7 @@ const routes = {
         logHistory: new RegExp(`^/updates/log/history$`),
         task: new RegExp(`^/updates/task$`),
         taskHistory: new RegExp(`^/updates/task/history$`),
-        user: new RegExp(`^/updates/user`)
+        userLog: new RegExp(`^/updates/user`)
     },
     deletes: {
         error: new RegExp('^/deletes/error$'),

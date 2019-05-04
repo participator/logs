@@ -16,8 +16,8 @@ const callDB = (collectionName, url) => {
     /**
      * /read/all
      */
-    if (routesReads.all.test(url)) {
-        console.log('[read all]', url);
+    if (routesReads.logs.test(url)) {
+        console.log('[read all] from ' + collectionName, url);
         return dbReads.all(collectionName)
         .catch(err => {
             throw err;
@@ -27,7 +27,7 @@ const callDB = (collectionName, url) => {
      * /read/{_userId}
      * /read/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesReads.userAll.test(url)) {
+    else if (routesReads.userLogs.test(url)) {
         const ids = url.match(matchIdsRegExpString);
         return dbReads.userAll(collectionName, new objectId(ids[0]))
         .catch(err => {
@@ -49,7 +49,7 @@ const callDB = (collectionName, url) => {
      * /read/{_userId}/log/{_logId}
      * /read/xxxxxxxxxxxxxxxxxxxxxxxx/log/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesReads.userSpecific.test(req.url)) {
+    else if (routesReads.userLog.test(req.url)) {
         const ids = req.url.match(matchIdsRegExpString);
         console.log('[userSpecific] ids', JSON.stringify(ids));
         return dbReads.userSpecific(collectionName, {'_id': new objectId(ids[1])}, new objectId(ids[0]))
@@ -57,6 +57,9 @@ const callDB = (collectionName, url) => {
             return err;
         });
     }
+    /**
+     * /read/task
+     */
     /**
      * Invalid path - display to user not found
      */
@@ -72,9 +75,9 @@ module.exports = {
      * @param {string} url 
      */
     isRouteMatch(url) {
-        return routesReads.all.test(url)
-        || routesReads.userAll.test(url)
+        return routesReads.logs.test(url)
+        || routesReads.userLogs.test(url)
         || routesReads.specific.test(url)
-        || routesReads.userSpecific.test(url);
+        || routesReads.userLog.test(url);
     }
 };

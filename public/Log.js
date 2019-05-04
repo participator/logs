@@ -24,7 +24,7 @@
         // });
 
         const host = '//localhost:8081';
-        fetchLogs(host + '/reads/all').then(data => {
+        fetchLogs(host + '/reads/logs').then(data => {
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);

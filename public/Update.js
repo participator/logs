@@ -18,7 +18,7 @@
             createForm = Shared.makeCreateForm(updateFormParentElement, {
                 id: 'updateLog',
                 enctype: 'multipart/form-data',
-                method: 'UPDATE'
+                method: 'PUT'
             }, 'Update Log', submitEventHandler, id);
         }
         
