@@ -28,7 +28,7 @@
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
-            displayLogsOnPage.getElement('app');
+            displayLogsOnPage.getElement('data');
             displayLogsOnPage.displayLogs(data);
         })
         .catch(() => {

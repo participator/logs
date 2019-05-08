@@ -8,20 +8,22 @@
     --primary-button: buttonface;
     --tag: buttonface;
 }
+html,
 body {
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     margin: 0;
-}
+    padding: 0;
+}   
 .pageHeader {
     display: flex;
-    position: fixed;
     justify-content: space-between;
     color: white;
-    background-color: var(--red); /*firebrick*/
+    background-color: var(--red);
     font-weight: bold;
-    min-height: 1.5em;
-    top: 0;
-    width: 100%;
+    height: 15%;
+    min-height: 2.5em;
 }
 header h1 {
     margin-bottom: auto;
@@ -45,8 +47,12 @@ header div.sortBy .sortControl {
     /* font-size: 3em; */
 }
 main {
-    margin-bottom: 2em;
-    margin-top: 3em;
+    flex-grow: 1;
+    overflow: hidden;
+}
+#app #data {
+    height: 100%;
+    overflow-y: auto;
 }
 .logs,
 .log_helpfulResources {
@@ -88,29 +94,32 @@ ul.logs>li {
     background-color: var(--red-transparent);
     border: none;
     border-radius: 50%;
-    bottom: 1em;
+    bottom: 0.5em;
     color: white;
     font-size: 1.5em;
     padding: 0.25em .5em;
-    position: fixed;
-    right: 1em;
+    position: absolute;
+    right: 2em;
+}
+#forms,
+#actions {
+    bottom: 0;
+    position: relative;
 }
 #createForm,
 #updateForm {
     background-color: white;
     bottom: 0;
     box-shadow: 0 8px 16px rgba(0,0,0,0.45);
-    position: fixed;
+    position: absolute;
     min-height: 200px;
-    max-height: 50%;
-    right: calc(2em + 3em);
+    right: calc(3em + 3em);
     width: 300px;
 }
 #createForm form,
 #updateForm form {
     display: flex;
     flex-direction: column;
-    padding-bottom: 1em;
     justify-content: space-between;
 }
 #createForm input,
@@ -168,9 +177,6 @@ ul.logs>li {
 }
 footer {
     background-color: var(--red-transparent);
-    bottom: 0;
     color: white;
-    position: fixed;
     text-align: center;
-    width: 100%;
 }
