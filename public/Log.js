@@ -28,7 +28,7 @@
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
-            displayLogsOnPage.getElement('data');
+            displayLogsOnPage.getElement('app_data');
             displayLogsOnPage.displayLogs(data);
         })
         .catch(() => {
@@ -56,11 +56,11 @@
     const logsOnPage = {
         /**
          * Grabs DOM element to display log data in
-         * @param {string} id - element id
+         * @param {string} className - element className
          */
-        getElement(id) {
+        getElement(className) {
             if (!this.logsDomElement) {
-                this.logsDomElement = document.getElementById(id);
+                this.logsDomElement = document.querySelector('.' + className);
                 if (!this.logsDomElement) return new Error('Must supply a page element to display data on');
             }
         },

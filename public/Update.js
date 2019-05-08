@@ -12,7 +12,7 @@
 
     let createForm;
     exports.createUpdateForm = (id) => {
-        const updateFormParentElement = document.getElementById('updateForm');
+        const updateFormParentElement = document.querySelector('.app_forms_update');
         
         if (!createForm) {
             createForm = Shared.makeCreateForm(updateFormParentElement, {

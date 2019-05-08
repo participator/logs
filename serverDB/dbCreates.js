@@ -1,5 +1,5 @@
 // npm Packages
-const objectId = require('mongodb').ObjectID,
+const ObjectId = require('mongodb').ObjectID,
 assert = require('assert');
 
 // Custom Packages
@@ -32,13 +32,16 @@ const insertDocuments = function(db, collectionName, documents) {
  */
 const insertLog = (collectionName, document, userId) => {
     const log = Object.create(logModel);
-    log.init(new objectId(userId), document.title);
+    log.init(new ObjectId(userId), document.title);
     log.description = document.description;
     log.helpfulResources = document.helpfulResources;
     log.status = document.status;
     log.type = document.type;
 
-    return dbConnect(collectionName, insertDocuments, log).catch(err => {
+    return dbConnect(collectionName, insertDocuments, log).then(log => {
+        log.ops[0].createdDate = ObjectId(log.insertedId.id).getTimestamp();
+        return log;
+    }).catch(err => {
         throw err;
     });
 };

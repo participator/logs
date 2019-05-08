@@ -9,11 +9,11 @@
     const App = window.Log.App;
     const Shared = window.Log.App.Shared;
         
-    const createButton = document.getElementById('create');
+    const createButton = document.querySelector('.app_actions_create');
 
     let createForm;
     createButton.addEventListener('click', () => {
-        const createFormParentElement = document.getElementById('createForm');
+        const createFormParentElement = document.querySelector('.app_forms_create');
         
         if (!createForm) {
             createForm = Shared.makeCreateForm(createFormParentElement, {
