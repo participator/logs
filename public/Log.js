@@ -134,13 +134,17 @@
 
         // Add title
         let title = document.createElement('h2');
-        title.innerText = log.title;
         title.dataset.name = 'title';
+        if (log.title) {
+            title.innerText = log.title;
+        }
         logElement.appendChild(title);
 
         let description = document.createElement('p');
-        description.innerText = log.description;
         description.dataset.name = 'description';
+        if (log.description) {
+            description.innerText = log.description;
+        }
         logElement.appendChild(description);
 
         // Add Helplful Resources
@@ -174,7 +178,7 @@
         const actions = document.createElement('div');
         actions.classList.add('log_actions');
 
-        // Add update to actions
+        // Add Update Log to actions
         const update = document.createElement('button');
         update.dataset.id = log._id;
         update.append('Update Log');
@@ -185,7 +189,7 @@
         });
         actions.appendChild(update);
 
-        // Add history to actions
+        // Add See history to actions
         const history = document.createElement('button');
         history.dataset.id = log._id;
         history.append('See History');
@@ -224,16 +228,20 @@
         element.classList.add('log_helpfulResource');
         
         const link = document.createElement('a');
-        link.href = helpfulResource.url;
-        link.rel = 'external';
-        link.target = '_blank';
-        link.append(helpfulResource.name);
-        element.appendChild(link);
+        if (helpfulResource.url) {
+            link.href = helpfulResource.url;
+            link.rel = 'external';
+            link.target = '_blank';
+            link.append(helpfulResource.name);
+            element.appendChild(link);
+        }
 
         const usefulness = document.createElement('p');
-        usefulness.append(helpfulResource.usefulness);
-        link.appendChild(usefulness);
-        element.appendChild(usefulness);
+        if (helpfulResource.usefulness) {
+            usefulness.append(helpfulResource.usefulness);
+            link.appendChild(usefulness);
+            element.appendChild(usefulness);
+        }
         
         return element;
     };

@@ -22,7 +22,6 @@ body {
     color: white;
     background-color: var(--red);
     font-weight: bold;
-    height: 15%;
     min-height: 2.5em;
 }
 header h1 {
