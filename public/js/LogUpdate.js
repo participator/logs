@@ -10,23 +10,6 @@
     const exports = {};
     window.Log.App.Update = exports;
 
-    let createForm;
-    exports.createUpdateForm = (id) => {
-        const updateFormParentElement = document.querySelector('.app_forms_update');
-        
-        if (!createForm) {
-            createForm = Shared.makeCreateForm(updateFormParentElement, {
-                id: 'updateLog',
-                enctype: 'multipart/form-data',
-                method: 'PUT'
-            }, 'Update Log', submitEventHandler, id);
-        }
-        
-        updateFormParentElement.appendChild(createForm.header);
-        updateFormParentElement.appendChild(mapLogData(id, createForm.form));
-        updateFormParentElement.hidden = false;
-    }
-
     const submitEventHandler = (event, logId) => {
         const fd = new FormData(event.target.form);
 
@@ -76,5 +59,9 @@
 
         return form;
     };
+
+    const parseLogData = (logElement) => {
+        
+    }
     
 })()

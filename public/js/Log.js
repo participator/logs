@@ -122,7 +122,7 @@
         const logElement = document.createElement('li');
         logElement.dataset.id = log._id;
 
-        // Delete Actions
+        // Delete Button
         let deleteElement = document.createElement('button');
         deleteElement.dataset.id = log._id;
         deleteElement.innerText = 'X';
@@ -175,35 +175,9 @@
         type.append(log.type);
         logElement.appendChild(type);
 
-        // Add action buttons
-        const actions = document.createElement('div');
-        actions.classList.add('log_actions');
-
-        // Add Update Log to actions
-        const update = document.createElement('button');
-        update.dataset.id = log._id;
-        update.append('Update Log');
-        update.addEventListener('click', event => {
-            const Update = window.Log.App.Update;
-            const target = event.target;
-            Update.createUpdateForm(target.dataset.id);
-        });
-        // update.classList.add('btn');
-        actions.appendChild(update);
-
-        // Add See history to actions
-        const history = document.createElement('button');
-        history.dataset.id = log._id;
-        history.append('See History');
-        // history.classList.add('btn');
-        actions.appendChild(history);
-
-        // Add See task to actions
-        const tasks = document.createElement('button');
-        tasks.dataset.id = log._id;
-        tasks.append('See Tasks');
-        // tasks.classList.add('btn');
-        actions.appendChild(tasks);
+        // Add actions
+        const actions = createActionsElement(log._id);
+        
         
         // Append actions to logElement
         logElement.appendChild(actions);
@@ -250,4 +224,37 @@
         
         return element;
     };
+
+    const createActionsElement = id => {
+        const actions = document.createElement('div');
+        actions.classList.add('log_actions');
+
+        // Add Update Log to actions
+        const update = document.createElement('button');
+        update.dataset.id = id;
+        update.append('Update Log');
+        update.addEventListener('click', event => {
+            const Update = window.Log.App.Update;
+            const target = event.target;
+            Update.createUpdateForm(target.dataset.id);
+        });
+        // update.classList.add('btn');
+        actions.appendChild(update);
+
+        // Add See history to actions
+        const history = document.createElement('button');
+        history.dataset.id = id;
+        history.append('See History');
+        // history.classList.add('btn');
+        actions.appendChild(history);
+
+        // Add See task to actions
+        const tasks = document.createElement('button');
+        tasks.dataset.id = id;
+        tasks.append('See Tasks');
+        // tasks.classList.add('btn');
+        actions.appendChild(tasks);
+
+        return actions;
+    }
 })()

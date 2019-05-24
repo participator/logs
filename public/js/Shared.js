@@ -41,26 +41,16 @@
         form.appendChild(addHelpfulResourceButton);
 
         const statusElement = createFormSelectElement('status', 'Status');
-        statusElement.lastElementChild.options.add(new Option('In Progress', 'InProgress'));
-        statusElement.lastElementChild.options.add(new Option('Pending', 'Pending'));
-        statusElement.lastElementChild.options.add(new Option('Completed', 'Completed'));
-        statusElement.lastElementChild.options.add(new Option('Cancelled', 'Cancelled'));
+        statusOptions.forEach(option => {
+            statusElement.lastElementChild.options.add(new Option(option.text, option.value));
+        })
         form.appendChild(statusElement);
 
         const typeElement = createFormSelectElement('type', 'Type');
-        typeElement.lastElementChild.options.add(new Option('Development', 'Development'));
-        typeElement.lastElementChild.options.add(new Option('Financial', 'Financial'));
-        typeElement.lastElementChild.options.add(new Option('Entertainment', 'Entertainment'));
-        typeElement.lastElementChild.options.add(new Option('Health', 'Health'));
-        typeElement.lastElementChild.options.add(new Option('Travel', 'Travel'));
-        typeElement.lastElementChild.options.add(new Option('Add One', 'AddOne'));
+        typeOptions.forEach(option => {
+            typeElement.lastElementChild.options.add(new Option(option.text, option.value));
+        })
         form.appendChild(typeElement);
-
-        // const userIdElement = document.createElement('input');
-        // userIdElement.type = "hidden";
-        // userIdElement.name = 'userId';
-        // userIdElement.value = window.Log.userId;
-        // form.appendChild(userIdElement);
 
         const createLogButton = document.createElement('button');
         createLogButton.classList.add('createLog_submitButton');
@@ -194,9 +184,22 @@
 
     const createAddHelpfulResourceInputs = (title, link, description) => {
         const container = document.createElement('div');
+        container.classList.add('createForm_helpfulResources_Inputs');
+
+        // delete
+        const deleteHelpfulResource = document.createElement('button');
+        deleteHelpfulResource.innerText = 'X';
+        deleteHelpfulResource.classList.add('createForm_helpfulResources_Delete');
+        deleteHelpfulResource.classList.add('btn');
+        deleteHelpfulResource.addEventListener('click', event => {
+            const helpfulResource = event.target.parentNode;
+            helpfulResource.remove();
+        });
+        container.appendChild(deleteHelpfulResource);
         
         // title
         const titleInputElement = document.createElement('input');
+        titleInputElement.classList.add('createForm_helpfulResources_Input');
         titleInputElement.placeholder = 'Add title of resource here';
         titleInputElement.type = 'text';
         titleInputElement.value = title || "";
@@ -204,6 +207,7 @@
         
         // link
         const linkInputElement = document.createElement('input');
+        linkInputElement.classList.add('createForm_helpfulResources_Input');
         linkInputElement.placeholder = 'Add link to this resource here';
         linkInputElement.type = 'text';
         linkInputElement.value = link || "";
@@ -211,6 +215,7 @@
         
         // description
         const descriptionInputElement = document.createElement('input');
+        descriptionInputElement.classList.add('createForm_helpfulResources_Input');
         descriptionInputElement.placeholder = 'How is this useful?';
         descriptionInputElement.type = 'text';
         descriptionInputElement.value = description || "";
@@ -218,4 +223,46 @@
 
         return container;
     }
+
+    const statusOptions = [
+        {
+            text: 'In Progress',
+            value: 'InProgress'
+        },
+        {
+            text: 'Pending',
+            value: 'Pending'
+        },
+        {
+            text: 'Completed',
+            value: 'Completed'
+        },
+        {
+            text: 'Cancelled',
+            value: 'Cancelled'
+        }
+    ]
+
+    const typeOptions = [
+        {
+            text: 'Development',
+            value: 'Development'
+        },
+        {
+            text: 'Financial',
+            value: 'Financial'
+        },
+        {
+            text: 'Entertainment',
+            value: 'Entertainment'
+        },
+        {
+            text: 'Health',
+            value: 'Health'
+        },
+        {
+            text: 'Travel',
+            value: 'Travel'
+        }
+    ]
 })();

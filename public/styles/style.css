@@ -87,8 +87,7 @@ ul.logs>li {
     flex-wrap: wrap;
 }
 .log_helpfulResource {
-    margin: 0.2em 0.5em;
-    width: 40%;
+    margin: 0.5em 5em 0.5em 0;
 }
 .log_type {
     background-color: var(--tag);
@@ -137,6 +136,7 @@ ul.logs>li {
     border: 1px solid lightgrey;
     border-left: none;
     border-right: none;
+    padding: 0 0.5em;
 }
 .app_forms_create select,
 .app_forms_update select {
@@ -156,7 +156,7 @@ ul.logs>li {
     margin: 0.5em 0;
 }
 .createForm_label_text {
-    padding-left: 0.2em;
+    padding: 0 0.5em;
 }
 .createForm_title {
     width: 100%;
@@ -169,6 +169,16 @@ ul.logs>li {
 .createForm_helpfulResources {
     max-height: 8em;
     overflow-y: auto;
+}
+.createForm_helpfulResources_Inputs {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+    margin: 0.5em 0;
+}
+.createForm_helpfulResources_Delete {
+    float: right;
+}
+.createForm_helpfulResources_Input {
+    width: 100%;
 }
 .createLog_close {
     background-color: var(--red);
