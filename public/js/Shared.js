@@ -63,7 +63,7 @@
         // form.appendChild(userIdElement);
 
         const createLogButton = document.createElement('button');
-        createLogButton.classList.add('createLog');
+        createLogButton.classList.add('createLog_submitButton');
         createLogButton.type = "submit";
         createLogButton.form = form.id;
         createLogButton.innerText = title;
@@ -179,32 +179,43 @@
 
     const createAddHelpfulResourceButton = (parentElement) => {
         const addHelpfulResourceButton = document.createElement('button');
+        addHelpfulResourceButton.classList.add('createLog_addHelpfulResourceButton');
         addHelpfulResourceButton.innerText = 'Add a Resource';
         addHelpfulResourceButton.type = 'button';
 
         addHelpfulResourceButton.addEventListener('click', () => {
-            const container = document.createElement('div');
-            // title
-            const titleInputElement = document.createElement('input');
-            titleInputElement.placeholder = 'Add title of resource here';
-            titleInputElement.type = 'text';
-            container.appendChild(titleInputElement);
-
-            // link
-            const linkInputElement = document.createElement('input');
-            linkInputElement.placeholder = 'Add link to this resource here';
-            linkInputElement.type = 'text';
-            container.appendChild(linkInputElement);
-
-            // description
-            const descriptionInputElement = document.createElement('input');
-            descriptionInputElement.placeholder = 'How is this useful?';
-            descriptionInputElement.type = 'text';
-            container.appendChild(descriptionInputElement);
+            const container = createAddHelpfulResourceInputs();            
 
             parentElement.appendChild(container);
         });
 
         return addHelpfulResourceButton;
+    }
+
+    const createAddHelpfulResourceInputs = (title, link, description) => {
+        const container = document.createElement('div');
+        
+        // title
+        const titleInputElement = document.createElement('input');
+        titleInputElement.placeholder = 'Add title of resource here';
+        titleInputElement.type = 'text';
+        titleInputElement.value = title || "";
+        container.appendChild(titleInputElement);
+        
+        // link
+        const linkInputElement = document.createElement('input');
+        linkInputElement.placeholder = 'Add link to this resource here';
+        linkInputElement.type = 'text';
+        linkInputElement.value = link || "";
+        container.appendChild(linkInputElement);
+        
+        // description
+        const descriptionInputElement = document.createElement('input');
+        descriptionInputElement.placeholder = 'How is this useful?';
+        descriptionInputElement.type = 'text';
+        descriptionInputElement.value = description || "";
+        container.appendChild(descriptionInputElement);
+
+        return container;
     }
 })();

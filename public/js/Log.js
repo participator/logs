@@ -127,6 +127,7 @@
         deleteElement.dataset.id = log._id;
         deleteElement.innerText = 'X';
         deleteElement.classList.add('log_delete');
+        deleteElement.classList.add('btn');
         deleteElement.addEventListener('click', event => {
             exports.Delete.deleteLog(event.target.dataset.id);
         });
@@ -187,18 +188,21 @@
             const target = event.target;
             Update.createUpdateForm(target.dataset.id);
         });
+        // update.classList.add('btn');
         actions.appendChild(update);
 
         // Add See history to actions
         const history = document.createElement('button');
         history.dataset.id = log._id;
         history.append('See History');
+        // history.classList.add('btn');
         actions.appendChild(history);
 
         // Add See task to actions
         const tasks = document.createElement('button');
         tasks.dataset.id = log._id;
         tasks.append('See Tasks');
+        // tasks.classList.add('btn');
         actions.appendChild(tasks);
         
         // Append actions to logElement
@@ -229,6 +233,7 @@
         
         const link = document.createElement('a');
         if (helpfulResource.url) {
+            link.dataset.name = 'helpfulResource_title';
             link.href = helpfulResource.url;
             link.rel = 'external';
             link.target = '_blank';
@@ -238,8 +243,8 @@
 
         const usefulness = document.createElement('p');
         if (helpfulResource.usefulness) {
+            usefulness.dataset.name = 'helpfulResource_usefulness';
             usefulness.append(helpfulResource.usefulness);
-            link.appendChild(usefulness);
             element.appendChild(usefulness);
         }
         

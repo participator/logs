@@ -1,41 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="../public/LogError.js" type="text/javascript" charset="UTF-8"></script>
-    <script src="../public/Log.js" type="text/javascript" charset="UTF-8"></script>
-    <script defer src="../public/Shared.js" type="text/javascript" charset="UTF-8"></script>
-    <script defer src="../public/Create.js" type="text/javascript" charset="UTF-8"></script>
-    <script defer src="../public/Delete.js" type="text/javascript" charset="UTF-8"></script>
-    <script defer src="../public/Update.js" type="text/javascript" charset="UTF-8"></script>
-    <link href="../public/style.css" type="text/css" rel="stylesheet">
+    <script defer src="public/js/Shared.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="public/js/LogError.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="../public/js/Log.js" type="text/javascript" charset="UTF-8"></script>
+    <script defer src="public/js/LogCreate.js" type="text/javascript" charset="UTF-8"></script>
+    <script defer src="public/js/LogDelete.js" type="text/javascript" charset="UTF-8"></script>
+    <script defer src="public/js/LogUpdate.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="public/js/Task.js" type="text/javascript" charset="UTF-8"></script>
+    <!-- <script defer src="../public/js/TaskCreate.js" type="text/javascript" charset="UTF-8"></script>
+    <script defer src="../public/js/TaskDelete.js" type="text/javascript" charset="UTF-8"></script>
+    <script defer src="../public/js/TaskUpdate.js" type="text/javascript" charset="UTF-8"></script> -->
+    <link href="public/styles/style.css" type="text/css" rel="stylesheet">
     <title>log</title>
 </head>
+
 <body>
-    <header class="pageHeader">
-        <h1>My Daily Log</h1>
-        <div class="controls">
-            <div>
-                <label for="filter">Filter</label>
-                <input id="filter" type="search">
+    <header>
+        <div class="pageHeader">
+            <h1>My Daily Log</h1>
+            <div class="controls">
+                <div>
+                    <label for="filter">Filter</label>
+                    <input id="filter" type="search">
+                </div>
+                <div class="sortBy">
+                    <label for="sortByOptions">Sort By</label>
+                    <select id="sortByOptions">
+                        <option name="created" value="created">Date Created</option>
+                        <option name="modified" value="modified">Date Last Modified</option>
+                        <option name="status" value="status">Status</option>
+                        <option name="hasResources" value="hasResources">Has Resources</option>
+                    </select>
+                    <span class="sortControl" aria-label="ascending">&#42779;</span>
+                    <span class="sortControl" aria-label="descending">&#42780;</span>
+                    </span>
+                </div>
             </div>
-            <div class="sortBy">
-                <label for="sortByOptions">Sort By</label>
-                <select id="sortByOptions">
-                    <option name="created" value="created">Date Created</option>
-                    <option name="modified" value="modified">Date Last Modified</option>
-                    <option name="status" value="status">Status</option>
-                    <option name="hasResources" value="hasResources">Has Resources</option>
-                </select>
-                <span class="sortControl" aria-label="ascending">&#42779;</span>
-                <span class="sortControl" aria-label="descending">&#42780;</span>
-            </span>
+        </div>
+        <div class="subHeader none">
+            <h2 class="subHeader_title">Log Application Layout Update Task</h2>
+            <div><button class="subHeader_backButton btn">Back</button></div>
         </div>
     </header>
+
     <main id="app">
-        <section class="app_data"></section>
+        <section class="app_data">
+            <!-- <img clss="app_data_loading" src="public/images/mountains.svg" alt="loading icon"> -->
+            <div class="app_data_loading">Loading...</div>
+        </section>
         <section class="app_actions">
             <button class="app_actions_create" aria-label="Create New Log">+</button>
         </section>
@@ -44,6 +61,8 @@
             <div class="app_forms_update" hidden></div>
         </section>
     </main>
-    <footer>&copy; <span id="year"></span> <a aria-label="Link to participator repository of this application" href="https://github.com/participator/logs">participator</a></footer>
+    <footer>&copy; <span id="year"></span> <a aria-label="Link to participator repository of this application"
+            href="https://github.com/participator/logs">participator</a></footer>
 </body>
+
 </html>

@@ -3,6 +3,7 @@ const mimeTypes = {
     html: 'text/html',
     js: 'text/javascript',
     css: 'text/css',
+    svg: 'image/svg+xml'
 };
 
 const setHeaderMimeType = fileExt => {
@@ -20,6 +21,9 @@ const setHeaderMimeType = fileExt => {
             break;
         case '.css':
             mimeType = mimeTypes.css;
+            break;
+        case '.svg':
+            mimeType = mimeTypes.svg;
             break;
     }
     

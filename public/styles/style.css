@@ -45,6 +45,20 @@ header div.sortBy {
 header div.sortBy .sortControl {
     /* font-size: 3em; */
 }
+.subHeader {
+    align-items: center;
+    box-shadow: lightgrey 0px 1px 5px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
+}
+.subHeader_title {
+    margin-top: .5em;
+    margin-bottom: .5em;   
+}
+.subHeader_backButton {
+    
+}
 #app {
     flex-grow: 1;
     overflow: hidden;
@@ -59,12 +73,7 @@ header div.sortBy .sortControl {
     padding: 0;
 }
 .log_delete {
-    border: none;
     float: right;
-    background-color: buttonface;
-}
-.log_delete:hover {
-    background-color: grey;
 }
 ul.logs>li {
     border: black solid 1px;
@@ -161,10 +170,6 @@ ul.logs>li {
     max-height: 8em;
     overflow-y: auto;
 }
-.createLog {
-    align-self: center;
-    margin: 1em;
-}
 .createLog_close {
     background-color: var(--red);
     border: none;
@@ -174,8 +179,52 @@ ul.logs>li {
 .createLog_close:focus {
     outline: solid lightblue;
 }
+.createLog_addHelpfulResourceButton,
+.createLog_submitButton {
+    align-self: center;
+    margin: 1em;
+}
+
 footer {
     background-color: var(--red-transparent);
     color: white;
     text-align: center;
+}
+
+/* Common Classes */
+.btn {
+    border: none;
+    padding: .5em;
+    font-weight: bold;
+}
+.btn:hover {
+    background-color: grey;
+}
+.app_data_loading {
+    align-items: flex-end;
+    animation: 60s linear 0s infinite move_right;
+    background-image: url('../images/mountains.svg');
+    background-position: 0% 0%;
+    background-repeat: repeat-x;
+    background-size: contain;
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    left: 45%;
+    position: absolute;
+    top: 45%;
+    width: 221px;
+}
+@keyframes move_right {
+    from {
+        background-position: 0% 0%;
+        /* width: 50px; */
+    }
+    to {
+        background-position: 3500000% 0%;
+        /* width: 100%; */
+    }
+}
+.none {
+    display: none;
 }
