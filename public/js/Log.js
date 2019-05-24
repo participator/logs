@@ -120,6 +120,7 @@
     exports.createLogElement = log => {
 
         const logElement = document.createElement('li');
+        logElement.classList.add('log');
         logElement.dataset.id = log._id;
 
         // Delete Button
@@ -172,6 +173,7 @@
         // Add type
         const type = document.createElement('span');
         type.classList.add('log_type');
+        type.dataset.name = 'type';
         type.append(log.type);
         logElement.appendChild(type);
 
@@ -204,10 +206,11 @@
     const createHelpfulResourceElement = helpfulResource => {
         const element = document.createElement('li');
         element.classList.add('log_helpfulResource');
+        element.dataset.name = 'helpfulResource';
         
         const link = document.createElement('a');
         if (helpfulResource.url) {
-            link.dataset.name = 'helpfulResource_title';
+            link.dataset.helpfulResource = 'title';
             link.href = helpfulResource.url;
             link.rel = 'external';
             link.target = '_blank';
@@ -217,7 +220,7 @@
 
         const usefulness = document.createElement('p');
         if (helpfulResource.usefulness) {
-            usefulness.dataset.name = 'helpfulResource_usefulness';
+            usefulness.dataset.helpfulResource = 'usefulness';
             usefulness.append(helpfulResource.usefulness);
             element.appendChild(usefulness);
         }
@@ -235,8 +238,8 @@
         update.append('Update Log');
         update.addEventListener('click', event => {
             const Update = window.Log.App.Update;
-            const target = event.target;
-            Update.createUpdateForm(target.dataset.id);
+            const log = event.target.parentNode.parentNode;
+            Update.convertToEditable(log);
         });
         // update.classList.add('btn');
         actions.appendChild(update);

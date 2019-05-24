@@ -40,16 +40,10 @@
         form.appendChild(helpfulResourcesElement);
         form.appendChild(addHelpfulResourceButton);
 
-        const statusElement = createFormSelectElement('status', 'Status');
-        statusOptions.forEach(option => {
-            statusElement.lastElementChild.options.add(new Option(option.text, option.value));
-        })
+        const statusElement = exports.createFormSelectStatusElement();
         form.appendChild(statusElement);
 
-        const typeElement = createFormSelectElement('type', 'Type');
-        typeOptions.forEach(option => {
-            typeElement.lastElementChild.options.add(new Option(option.text, option.value));
-        })
+        const typeElement = exports.createFormSelectTypeElement()
         form.appendChild(typeElement);
 
         const createLogButton = document.createElement('button');
@@ -143,6 +137,26 @@
         return label;
     }
 
+    exports.createFormSelectStatusElement = () => {
+        const statusElement = createFormSelectElement('status', 'Status');
+
+        statusOptions.forEach(option => {
+            statusElement.lastElementChild.options.add(new Option(option.text, option.value));
+        })
+
+        return statusElement;
+    }
+
+    exports.createFormSelectTypeElement = () => {
+        const typeElement = createFormSelectElement('type', 'Type');
+
+        typeOptions.forEach(option => {
+            typeElement.lastElementChild.options.add(new Option(option.text, option.value));
+        })
+
+        return typeElement;
+    }
+
     /**
      * 
      * @param {string} name - string added into element's name attribute
@@ -227,7 +241,7 @@
     const statusOptions = [
         {
             text: 'In Progress',
-            value: 'InProgress'
+            value: 'In Progress'
         },
         {
             text: 'Pending',

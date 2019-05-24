@@ -60,8 +60,24 @@
         return form;
     };
 
-    const parseLogData = (logElement) => {
-        
+    exports.convertToEditable = (logElement) => {
+        const editableElements = logElement.querySelectorAll('[data-name]');
+
+        editableElements.forEach(element => {
+            element.contentEditable = true
+
+            switch (element.dataset.name) {
+                case 'helpfulResource': 
+                    console.log('[helpfulResource] ', element);
+                    break;
+                case 'status': 
+                    console.log('[status]', element.innerText);
+                    break;
+                case 'type':
+                    console.log('[type]', element.innerText);
+                    break;
+            }
+        });
     }
     
 })()

@@ -72,13 +72,19 @@ header div.sortBy .sortControl {
     list-style-type: none;
     padding: 0;
 }
-.log_delete {
-    float: right;
-}
-ul.logs>li {
+.log {
     border: black solid 1px;
     margin: 1em;
     padding: 1em;
+}
+.log  [contentEditable=true]:before {
+    content: '🖉';
+    display: inline-block;
+    margin-right: .5em;
+    transform: rotate(-100deg);
+}
+.log_delete {
+    float: right;
 }
 .log_helpfulResources {
     display: flex;
@@ -88,6 +94,7 @@ ul.logs>li {
 }
 .log_helpfulResource {
     margin: 0.5em 5em 0.5em 0;
+    width: 25%;
 }
 .log_type {
     background-color: var(--tag);
@@ -176,6 +183,7 @@ ul.logs>li {
 }
 .createForm_helpfulResources_Delete {
     float: right;
+    font-size: 10px;
 }
 .createForm_helpfulResources_Input {
     width: 100%;
