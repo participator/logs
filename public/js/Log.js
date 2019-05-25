@@ -31,9 +31,10 @@
             displayLogsOnPage.getElement('app_data');
             displayLogsOnPage.displayLogs(data);
         })
-        .catch(() => {
+        .catch((err) => {
             const app = document.getElementById('app');
             app.innerHTML = 'Unable to load data';
+            console.error('[Error Getting Data]', err);
         });
     };
 
@@ -239,7 +240,7 @@
         update.addEventListener('click', event => {
             const Update = window.Log.App.Update;
             const log = event.target.parentNode.parentNode;
-            Update.convertToEditable(log);
+            Update.updateActionsButtons(log);
         });
         // update.classList.add('btn');
         actions.appendChild(update);
@@ -257,6 +258,27 @@
         tasks.append('See Tasks');
         // tasks.classList.add('btn');
         actions.appendChild(tasks);
+
+        // Add Update to actions
+        const editableUpdate = document.createElement('button');
+        editableUpdate.classList.add('none');
+        editableUpdate.dataset.id = id;
+        editableUpdate.dataset.editableAction = true;
+        editableUpdate.append('Update');
+        // tasks.classList.add('btn');
+        actions.appendChild(editableUpdate);
+
+        // Add Cancel to actions
+        const editableCancel = document.createElement('button');
+        editableCancel.classList.add('none');
+        editableCancel.dataset.id = id;
+        editableCancel.dataset.editableAction = true;
+        editableCancel.append('Cancel');
+        editableCancel.addEventListener('click', event => {
+            return undefined;
+        });
+        // tasks.classList.add('btn');
+        actions.appendChild(editableCancel);
 
         return actions;
     }

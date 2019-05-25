@@ -60,24 +60,77 @@
         return form;
     };
 
-    exports.convertToEditable = (logElement) => {
+    exports.updateActionsButtons = (log) => {
+        convertLogToEditable(log);
+        switchToEditableActions(log.querySelector('.log_actions'));
+    }
+    
+    // TODO: consider having a function that builds a JSON object with log data on UI
+    // that log data is passed into another function with creates a new log element
+    // replaces the old log element
+    const convertLogToEditable = (logElement) => {
         const editableElements = logElement.querySelectorAll('[data-name]');
 
         editableElements.forEach(element => {
-            element.contentEditable = true
 
             switch (element.dataset.name) {
-                case 'helpfulResource': 
-                    console.log('[helpfulResource] ', element);
+                case 'title':
+                case 'description':
+                    element.contentEditable = true;
                     break;
-                case 'status': 
-                    console.log('[status]', element.innerText);
+
+                case 'helpfulResource':
+                    const titleElement = element.querySelector('[data-helpful-resource="title"]');
+                    const descriptionElement = element.querySelector('[data-helpful-resource="usefulness"]');
+                    
+                    /**
+                     * @param title - input element for title of resource
+                     * @param link - input element for link of resource
+                     * @param description - input element for description of resource
+                     */
+                    const helpfulResourceInputs = Shared.createAddHelpfulResourceInputs(
+                        titleElement.innerText, 
+                        titleElement.href, 
+                        descriptionElement.innerText);
+
+                    helpfulResourceInputs.contentEditable = true;
+
+                    element.innerHTML = '';
+                    element.appendChild(helpfulResourceInputs);
+                    console.log('[helpfulResource]', helpfulResourceInputs);
                     break;
+
+                    case 'status':
+                    const statusSelectElement = Shared.createFormSelectStatusElement(element.value);
+
+                    element.parentNode.contentEditable = true;
+
+                    element.innerHTML = '';
+                    element.appendChild(statusSelectElement.querySelector('[name="status"]'));
+                    console.log('[status]', statusSelectElement);
+                    break;
+
                 case 'type':
-                    console.log('[type]', element.innerText);
+                    const typeSelectElement = Shared.createFormSelectTypeElement(element.value);
+
+                    element.contentEditable = true;
+
+                    element.innerHTML = '';
+                    element.appendChild(typeSelectElement);
+                    console.log('[type]', typeSelectElement);
                     break;
             }
         });
     }
+
+    const switchToEditableActions = (actionsElement) => {
+        actionsElement.childNodes.forEach(element => {
+            element.dataset.editableAction ?
+                element.classList.remove('none') :
+                element.classList.add('none');
+        })
+    }
+
+
     
 })()

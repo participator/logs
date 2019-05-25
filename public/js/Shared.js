@@ -137,24 +137,66 @@
         return label;
     }
 
+    const statusOptions = [
+        {
+            text: 'In Progress',
+            value: 'In Progress'
+        },
+        {
+            text: 'Pending',
+            value: 'Pending'
+        },
+        {
+            text: 'Completed',
+            value: 'Completed'
+        },
+        {
+            text: 'Canceled',
+            value: 'Canceled'
+        }
+    ]
+
     exports.createFormSelectStatusElement = () => {
-        const statusElement = createFormSelectElement('status', 'Status');
+        const statusSelectElement = createFormSelectElement('status', 'Status');
 
         statusOptions.forEach(option => {
-            statusElement.lastElementChild.options.add(new Option(option.text, option.value));
+            statusSelectElement.lastElementChild.options.add(new Option(option.text, option.value));
         })
 
-        return statusElement;
+        return statusSelectElement;
     }
 
+    const typeOptions = [
+        {
+            text: 'Development',
+            value: 'Development'
+        },
+        {
+            text: 'Financial',
+            value: 'Financial'
+        },
+        {
+            text: 'Entertainment',
+            value: 'Entertainment'
+        },
+        {
+            text: 'Health',
+            value: 'Health'
+        },
+        {
+            text: 'Travel',
+            value: 'Travel'
+        }
+    ]
+
     exports.createFormSelectTypeElement = () => {
-        const typeElement = createFormSelectElement('type', 'Type');
+        const typeSelectElement = createFormSelectElement('type', 'Type');
 
         typeOptions.forEach(option => {
-            typeElement.lastElementChild.options.add(new Option(option.text, option.value));
+            typeSelectElement.lastElementChild.options.add(new Option(option.text, option.value));
         })
 
-        return typeElement;
+        return typeSelectElement;
     }
 
     /**
@@ -188,7 +230,7 @@
         addHelpfulResourceButton.type = 'button';
 
         addHelpfulResourceButton.addEventListener('click', () => {
-            const container = createAddHelpfulResourceInputs();            
+            const container = exports.createAddHelpfulResourceInputs();
 
             parentElement.appendChild(container);
         });
@@ -196,7 +238,14 @@
         return addHelpfulResourceButton;
     }
 
-    const createAddHelpfulResourceInputs = (title, link, description) => {
+    /**
+     * Creates input elements for Helpful Resources
+     * @param {string} title - input element for title of resource
+     * @param {string} link - input element for link of resource
+     * @param {string} description - input element for description of resource
+     * @retuns {HTMLDIVELEMENT} container - all inputs grouped inside of a div
+     */
+    exports.createAddHelpfulResourceInputs = (title, link, description) => {
         const container = document.createElement('div');
         container.classList.add('createForm_helpfulResources_Inputs');
 
@@ -238,45 +287,4 @@
         return container;
     }
 
-    const statusOptions = [
-        {
-            text: 'In Progress',
-            value: 'In Progress'
-        },
-        {
-            text: 'Pending',
-            value: 'Pending'
-        },
-        {
-            text: 'Completed',
-            value: 'Completed'
-        },
-        {
-            text: 'Cancelled',
-            value: 'Cancelled'
-        }
-    ]
-
-    const typeOptions = [
-        {
-            text: 'Development',
-            value: 'Development'
-        },
-        {
-            text: 'Financial',
-            value: 'Financial'
-        },
-        {
-            text: 'Entertainment',
-            value: 'Entertainment'
-        },
-        {
-            text: 'Health',
-            value: 'Health'
-        },
-        {
-            text: 'Travel',
-            value: 'Travel'
-        }
-    ]
 })();
