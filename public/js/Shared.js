@@ -1,9 +1,25 @@
 (function(undefined) {
 
-    if (!window.Log.App) throw new Error('App library is not loaded');
+    if (!window.Log) window.Log = {};
+    if (window.Log.Shared) throw new Error('Name collision with Log\'s Shared package');
     
     const exports = {};
-    window.Log.App.Shared = exports;
+    window.Log.Shared = exports;
+
+    // Fetch data from endpoint with search parameters
+    /**
+     * 
+     * @param {string} url - url string to resource
+     * @param {Object} data - Request data
+     */
+    exports.fetchData = (url, data) => fetch(url, {
+        body: JSON.stringify(data)
+    }).then(response => {
+        return response.json();
+    }).catch(err => {
+        // LogError(err);
+        throw err;
+    });
     
     /**
      * Makes a log form to submit to the server
@@ -114,12 +130,12 @@
     }
 
     /**
-     * 
+     * createFormSelectElementWithLabel
      * @param {string} name - string added into element's name attribute
      * @param {string} title - string shown on UI to title the field
-     * @returns {HTMLLabelElement}
+     * @returns {HTMLLabelElement} - select form surrounded with label and text for its title
      */
-    const createFormSelectElement = (name, title) => {
+    const createFormSelectElementWithLabel = (name, title) => {
         const element = document.createElement('select');
         element.name = name;
         
@@ -135,6 +151,19 @@
         label.appendChild(element);
 
         return label;
+    }
+
+    /**
+     * createFormSelectElement
+     * @param {string} name - string added into element's name attribute
+     * @param {string} title - string shown on UI to title the field
+     * @returns {HTMLSelectElement} - select form
+     */
+    const createFormSelectElement = (name) => {
+        const element = document.createElement('select');
+        element.name = name;
+
+        return element;
     }
 
     const statusOptions = [
@@ -156,11 +185,24 @@
         }
     ]
 
-    exports.createFormSelectStatusElement = () => {
-        const statusSelectElement = createFormSelectElement('status', 'Status');
+    /**
+     * Creates a select input
+     * @param {Boolean} withoutLabel - Create a select element without a label?
+     * @returns {HTMLSelectElement} statusSelectElement
+     */
+    exports.createFormSelectStatusElement = (withoutLabel) => {
+        let statusSelectElement;
+        
+        withoutLabel ? statusSelectElement = createFormSelectElement('status') :
+        statusSelectElement = createFormSelectElementWithLabel('status', 'Status');
 
         statusOptions.forEach(option => {
-            statusSelectElement.lastElementChild.options.add(new Option(option.text, option.value));
+            if (withoutLabel) {
+                statusSelectElement.options.add(new Option(option.text, option.value));
+            }
+            else {
+                statusSelectElement.lastElementChild.options.add(new Option(option.text, option.value));
+            }
         })
 
         return statusSelectElement;
@@ -190,7 +232,7 @@
     ]
 
     exports.createFormSelectTypeElement = () => {
-        const typeSelectElement = createFormSelectElement('type', 'Type');
+        const typeSelectElement = createFormSelectElementWithLabel('type', 'Type');
 
         typeOptions.forEach(option => {
             typeSelectElement.lastElementChild.options.add(new Option(option.text, option.value));
@@ -230,9 +272,9 @@
         addHelpfulResourceButton.type = 'button';
 
         addHelpfulResourceButton.addEventListener('click', () => {
-            const container = exports.createAddHelpfulResourceInputs();
+            const addHelpfulResourceInputs = exports.createAddHelpfulResourceInputs();
 
-            parentElement.appendChild(container);
+            parentElement.appendChild(addHelpfulResourceInputs);
         });
 
         return addHelpfulResourceButton;

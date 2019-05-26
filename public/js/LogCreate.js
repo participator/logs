@@ -3,11 +3,11 @@
     const userId = window.Log.userId;
     
     if (!window.Log) throw new Error('Log library is not loaded');
+    if (!window.Log.Shared) throw new Error('App Shared library is not loaded');
     if (!window.Log.App) throw new Error('App library is not loaded');
-    if (!window.Log.App.Shared) throw new Error('App Shared library is not loaded');
 
+    const Shared = window.Log.Shared;
     const App = window.Log.App;
-    const Shared = window.Log.App.Shared;
         
     const createButton = document.querySelector('.app_actions_create');
 

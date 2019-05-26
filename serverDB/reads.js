@@ -38,8 +38,8 @@ const callDB = (collectionName, url) => {
      * /read/log/{_logId}
      * /read/log/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesReads.specific.test(req.url)) {
-        const ids = req.url.match(matchIdsRegExpString);
+    else if (routesReads.specific.test(url)) {
+        const ids = url.match(matchIdsRegExpString);
         return dbReads.specific(collectionName, {'_id': new objectId(ids[0])})
         .catch(err => {
             throw err;
@@ -49,8 +49,8 @@ const callDB = (collectionName, url) => {
      * /read/{_userId}/log/{_logId}
      * /read/xxxxxxxxxxxxxxxxxxxxxxxx/log/xxxxxxxxxxxxxxxxxxxxxxxx
      */
-    else if (routesReads.userLog.test(req.url)) {
-        const ids = req.url.match(matchIdsRegExpString);
+    else if (routesReads.userLog.test(url)) {
+        const ids = url.match(matchIdsRegExpString);
         console.log('[userSpecific] ids', JSON.stringify(ids));
         return dbReads.userSpecific(collectionName, {'_id': new objectId(ids[1])}, new objectId(ids[0]))
         .catch(err => {

@@ -7,6 +7,7 @@
     --secondary-button: buttonface;
     --primary-button: buttonface;
     --tag: buttonface;
+    --white-transparent: rgb(255, 255, 255, 0.8);
 }
 html,
 body {
@@ -202,6 +203,9 @@ header div.sortBy .sortControl {
     align-self: center;
     margin: 1em;
 }
+.update_helpfulResource_Input {
+    margin-right: 5em;
+}
 
 footer {
     background-color: var(--red-transparent);
@@ -219,19 +223,46 @@ footer {
     background-color: grey;
 }
 .app_data_loading {
+    display: flex;
+    justify-content: center;
     align-items: flex-end;
-    animation: 60s linear 0s infinite move_right;
+    position: absolute;
+    left: 45%;
+    top: 45%;
+    height: 60px;
+    width: 221px;
     background-image: url('../images/mountains.svg');
     background-position: 0% 0%;
     background-repeat: repeat-x;
     background-size: contain;
-    display: flex;
-    height: 60px;
-    justify-content: center;
-    left: 45%;
+    animation: 60s linear 0s infinite move_right;
+}
+.log_overlay {
     position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--white-transparent);
+    z-index: 1;
+}
+.log_data_loading {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: absolute;
+    left: 45%;
     top: 45%;
+    height: 60px;
     width: 221px;
+    background-size: contain;
+    background-position: 0% 0%;
+    background-image: url('../images/mountains.svg');
+    background-repeat: repeat-x;
+    animation: 60s linear 0s infinite move_right;
+}
+.log_centerElements {
+    position: relative;
 }
 @keyframes move_right {
     from {

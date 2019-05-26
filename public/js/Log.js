@@ -1,7 +1,11 @@
 (function(undefined) {
 
     if (!window.Log) window.Log = {};
+    if (!window.Log.Shared) throw new Error('App Shared library is not loaded');
     if (window.Log.App) throw new Error('Name collision with Log\'s App package');
+    
+    // const userId = window.Log.userId;
+    const Shared = window.Log.Shared;
     
     const exports = {};
     window.Log.App = exports;
@@ -24,7 +28,7 @@
         // });
 
         const host = '//localhost:8081';
-        fetchLogs(host + '/reads/logs').then(data => {
+        Shared.fetchData(`${host}/reads/logs`).then(data => {
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);
             const displayLogsOnPage = Object.create(logsOnPage);
@@ -37,22 +41,7 @@
             console.error('[Error Getting Data]', err);
         });
     };
-
-    // Fetch data from endpoint with search parameters
-    /**
-     * 
-     * @param {string} url - url string to resource
-     * @param {Object} data - Request data
-     */
-    const fetchLogs = (url, data) => fetch(url, {
-        body: JSON.stringify(data)
-    }).then(response => {
-        return response.json();
-    }).catch(err => {
-        // LogError(err);
-        throw err;
-    });
-
+    
     // Display data
     const logsOnPage = {
         /**
@@ -240,7 +229,8 @@
         update.addEventListener('click', event => {
             const Update = window.Log.App.Update;
             const log = event.target.parentNode.parentNode;
-            Update.updateActionsButtons(log);
+            const userId = window.Log.userId;
+            Update.updateActionsButtons(userId, log);
         });
         // update.classList.add('btn');
         actions.appendChild(update);

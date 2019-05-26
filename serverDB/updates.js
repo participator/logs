@@ -12,7 +12,7 @@ matchIdsRegExpString = require('./routes').matchIdsRegExpString;
  */
 const callDB = (collectionName, url, reqData) => {
     /**
-     * /create
+     * /update/log
      */
     if (routesUpdates.log.test(url)) {
         console.log('[requestCreatesData]', reqData.toString());
@@ -26,7 +26,7 @@ const callDB = (collectionName, url, reqData) => {
     }
 
     /**
-     * /create/error
+     * /update/error
      */
     else if (routesUpdates.error.test(url)) {
         const ids = url.match(matchIdsRegExpString);
