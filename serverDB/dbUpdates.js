@@ -62,7 +62,7 @@ const findOneAndUpdateDocument = (db, collectionName, document) => {
         }
     },
     options = {
-        returnNewDocument: true
+        returnOriginal: false
     };
     
     // Get the documents collection
