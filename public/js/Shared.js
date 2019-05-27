@@ -10,13 +10,13 @@
     /**
      * 
      * @param {string} url - url string to resource
-     * @param {Object} data - Request data
+     * @param {Object} options - Request options
      */
-    exports.fetchData = (url, data) => fetch(url, {
-        body: JSON.stringify(data)
-    }).then(response => {
+    exports.fetchData = (url, options) => fetch(url, options)
+    .then(response => {
         return response.json();
-    }).catch(err => {
+    })
+    .catch(err => {
         // LogError(err);
         throw err;
     });
@@ -111,20 +111,21 @@
      * @returns {HTMLLabelElement}
      */
     const createFormInputElement = (type, name, title) => {
-        const element = document.createElement('input');
-        element.name = name;
-        element.type = type;
-        
-        // Create element's label
+        // Create input element's label
         const label = document.createElement('label');
         label.htmlFor = name;
         
+        // Create input element's title
         const text = document.createElement('span');
         text.classList.add('createForm_label_text');
         text.innerHTML = title;
-        
         label.appendChild(text);
-        label.appendChild(element);
+        
+        // Create input element
+        const input = document.createElement('input');
+        input.name = name;
+        input.type = type;
+        label.appendChild(input);
 
         return label;
     }
@@ -136,9 +137,6 @@
      * @returns {HTMLLabelElement} - select form surrounded with label and text for its title
      */
     const createFormSelectElementWithLabel = (name, title) => {
-        const element = document.createElement('select');
-        element.name = name;
-        
         // Create element's label
         const label = document.createElement('label');
         label.htmlFor = name;
@@ -146,9 +144,11 @@
         const text = document.createElement('span');
         text.classList.add('createForm_label_text');
         text.innerHTML = title;
-        
         label.appendChild(text);
-        label.appendChild(element);
+        
+        const select = document.createElement('select');
+        select.name = name;
+        label.appendChild(select);
 
         return label;
     }
@@ -160,10 +160,10 @@
      * @returns {HTMLSelectElement} - select form
      */
     const createFormSelectElement = (name) => {
-        const element = document.createElement('select');
-        element.name = name;
+        const select = document.createElement('select');
+        select.name = name;
 
-        return element;
+        return select;
     }
 
     const statusOptions = [
@@ -248,9 +248,6 @@
      * @returns {HTMLLabelElement}
      */
     const createFormTextAreaElement = (name, title) => {
-        const element = document.createElement('textarea');
-        element.name = name;
-        
         // Create element's label
         const label = document.createElement('label');
         label.htmlFor = name;
@@ -258,9 +255,11 @@
         const text = document.createElement('span');
         text.classList.add('createForm_label_text');
         text.innerHTML = title;
-        
         label.appendChild(text);
-        label.appendChild(element);
+
+        const textarea = document.createElement('textarea');
+        textarea.name = name;
+        label.appendChild(textarea);
 
         return label;
     }
@@ -272,9 +271,14 @@
         addHelpfulResourceButton.type = 'button';
 
         addHelpfulResourceButton.addEventListener('click', () => {
+            const container = document.createElement('div');
+            container.classList.add('createForm_helpfulResources_Inputs');
+            
             const addHelpfulResourceInputs = exports.createAddHelpfulResourceInputs();
 
-            parentElement.appendChild(addHelpfulResourceInputs);
+            container.appendChild(addHelpfulResourceInputs);
+
+            parentElement.appendChild(container);
         });
 
         return addHelpfulResourceButton;
@@ -285,11 +289,10 @@
      * @param {string} title - input element for title of resource
      * @param {string} link - input element for link of resource
      * @param {string} description - input element for description of resource
-     * @retuns {HTMLDIVELEMENT} container - all inputs grouped inside of a div
+     * @returns {DocumentFragment} fragment - all inputs without a container
      */
     exports.createAddHelpfulResourceInputs = (title, link, description) => {
-        const container = document.createElement('div');
-        container.classList.add('createForm_helpfulResources_Inputs');
+        const fragment = document.createDocumentFragment();
 
         // delete
         const deleteHelpfulResource = document.createElement('button');
@@ -300,33 +303,36 @@
             const helpfulResource = event.target.parentNode;
             helpfulResource.remove();
         });
-        container.appendChild(deleteHelpfulResource);
+        fragment.appendChild(deleteHelpfulResource);
         
-        // title
-        const titleInputElement = document.createElement('input');
-        titleInputElement.classList.add('createForm_helpfulResources_Input');
-        titleInputElement.placeholder = 'Add title of resource here';
-        titleInputElement.type = 'text';
-        titleInputElement.value = title || "";
-        container.appendChild(titleInputElement);
+        // name
+        const nameInputElement = document.createElement('input');
+        nameInputElement.classList.add('createForm_helpfulResources_Input');
+        nameInputElement.name = 'helpfulResource_name';
+        nameInputElement.placeholder = 'Add name of resource here';
+        nameInputElement.type = 'text';
+        nameInputElement.value = title || "";
+        fragment.appendChild(nameInputElement);
         
-        // link
-        const linkInputElement = document.createElement('input');
-        linkInputElement.classList.add('createForm_helpfulResources_Input');
-        linkInputElement.placeholder = 'Add link to this resource here';
-        linkInputElement.type = 'text';
-        linkInputElement.value = link || "";
-        container.appendChild(linkInputElement);
+        // url
+        const urlInputElement = document.createElement('input');
+        urlInputElement.classList.add('createForm_helpfulResources_Input');
+        urlInputElement.name = 'helpfulResource_url';
+        urlInputElement.placeholder = 'Add link to this resource here';
+        urlInputElement.type = 'text';
+        urlInputElement.value = link || "";
+        fragment.appendChild(urlInputElement);
         
         // description
-        const descriptionInputElement = document.createElement('input');
-        descriptionInputElement.classList.add('createForm_helpfulResources_Input');
-        descriptionInputElement.placeholder = 'How is this useful?';
-        descriptionInputElement.type = 'text';
-        descriptionInputElement.value = description || "";
-        container.appendChild(descriptionInputElement);
+        const usefulnessInputElement = document.createElement('input');
+        usefulnessInputElement.classList.add('createForm_helpfulResources_Input');
+        usefulnessInputElement.name = 'helpfulResource_usefulness';
+        usefulnessInputElement.placeholder = 'How is this useful?';
+        usefulnessInputElement.type = 'text';
+        usefulnessInputElement.value = description || "";
+        fragment.appendChild(usefulnessInputElement);
 
-        return container;
+        return fragment;
     }
 
 })();

@@ -49,6 +49,7 @@
 
     exports.updateActionsButtons = (userId, logElement) => {
         const logDataOriginal = parseLogDataOriginal(logElement);
+        console.log('logDataOriginal ', logDataOriginal);
         convertLogToEditable(logElement);
         addEventsToEditableActions(userId, logElement);
         switchToEditableActions(logElement.querySelector('.log_actions'));
@@ -90,23 +91,20 @@
                     break;
 
                 case 'type':
-                    logData.status = element.innerText;
+                    logData.type = element.innerText;
                     break;
             }
         });
-
-        console.log(logData);
 
         return logData;
     };
 
     const parseLogDataUpdates = (logElement) => {
         const logData = {};
-        logData._id = logElement.dataset.id;
+        logData.id = logElement.dataset.id;
 
         const titleAndDescriptionParser = (element) => {
             logData[element.dataset.name] = element.innerText;
-            console.log('[titleAndDescriptionParser]', element);
         }
 
         const helpfulResourceParser = (element) => {
@@ -118,20 +116,19 @@
                 logData.helpfulResources = [];
 
             logData.helpfulResources.push({
-                name: titleElement.innerText,
-                url: urlElement.innerText,
-                usefulness: usefulnessElement.innerText
+                name: titleElement.value,
+                url: urlElement.value,
+                usefulness: usefulnessElement.value
             });
-            console.log('[helpfulResourceParser]', element);
         }
 
         const statusParser = (element) => {
-            logData.status = element.value;
+            logData.status = element.querySelector('select').value;
             console.log('[statusParser]', element);
         }
 
         const typeParser = (element) => {
-            logData.type = element.value;
+            logData.type = element.querySelector('select').value;
             console.log('[typeParser]', element);
         }
 
@@ -162,6 +159,7 @@
              * @param title - input element for title of resource
              * @param link - input element for link of resource
              * @param description - input element for description of resource
+             * @returns {DocumentFragment} fragment - all inputs without a container
              */
             const helpfulResourceInputsElement = Shared.createAddHelpfulResourceInputs(
                 titleElement.innerText,
@@ -172,22 +170,14 @@
             inputs[0].dataset.helpfulResource = 'title';
             inputs[1].dataset.helpfulResource = 'url';
             inputs[2].dataset.helpfulResource = 'usefulness';
-            console.log('[inputs]', inputs[0].dataset, inputs[1].dataset, inputs[2].dataset);
-
-            helpfulResourceInputsElement.classList.remove('createForm_helpfulResources_Inputs');
 
             element.classList.remove('log_helpfulResource');
             element.classList.add('update_helpfulResource_Input');
 
             element.contentEditable = true;
             element.innerHTML = '';
-            console.debug('[helpfulResourceInputsElement]', helpfulResourceInputsElement);
-
-            const doc = new DOMParser().parseFromString(helpfulResourceInputsElement.innerHTML, 'text/html');
-            doc.body.childNodes.forEach(node => {
-                element.appendChild(node);
-                console.info('[node]', node);
-            });
+            
+            element.appendChild(helpfulResourceInputsElement);
         }
 
         const statusParser = (element) => {
@@ -198,7 +188,6 @@
 
             element.innerHTML = '';
             element.appendChild(statusSelectElement);
-            console.log('[status]', statusSelectElement);
         }
 
         const typeParser = (element) => {
@@ -208,7 +197,6 @@
 
             element.innerHTML = '';
             element.appendChild(typeSelectElement);
-            console.log('[type]', typeSelectElement);
         }
         
         logElementParser(logElement,
@@ -253,7 +241,7 @@
 
         // Update Button Click Handler
         updateElement.addEventListener('click', () => {
-            const logDataUpdates = parseLogDataUpdates(logId);
+            const logDataUpdates = parseLogDataUpdates(logElement);
             console.info('[parseLogDataUpdates]', logDataUpdates);
             updateLog(userId, logId, logElement, logDataUpdates);
             console.info('[updateLog] complete');
@@ -273,18 +261,27 @@
 
     const updateLog = (userId, logId, logElement, logDataUpdates) => {
         // Show loading icon
-        const loadingOverlay = createLoadingOverlay();
+        const loadingOverlay = createLoadingOverlay('Updating...');
         
         logElement.appendChild(loadingOverlay);
         logElement.classList.add('log_centerElements'); // Helps aligns loading overlay in the center
 
         // Save updates
-        const host = '//localhost:8081'; 
-        Shared.fetchData(`${host}/updates/log`, )
-        .then(data => {
-
+        const host = 'http://localhost:8081';
+        Shared.fetchData(`${host}/updates/log`, {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify({userId: userId, data: logDataUpdates}),
+        })
+        .then(log => {
+            // Display log data
+            if (log) {
+                const newLogElement = App.createLogElement(log);
+                logElement.classList.remove('log_centerElements');
+                logElement.parentElement.replaceChild(newLogElement, logElement);
+            }
         }).catch(err => {
-            // Log error
+            // TODO: Log error
             //LogError(error);
             console.log('[error: updateLog]', err);
             logElement.innerText = 'Unable to update log.  Refresh to see log\'s data';
@@ -297,7 +294,7 @@
 
     const revertLog = (userId, logId, logElement) => {
         // Show loading icon
-        const loadingOverlay = createLoadingOverlay();
+        const loadingOverlay = createLoadingOverlay('Canceling...');
         
         logElement.appendChild(loadingOverlay);
         logElement.classList.add('log_centerElements'); // Helps aligns loading overlay in the center
@@ -313,7 +310,7 @@
                 logElement.parentElement.replaceChild(newLogElement, logElement);
             })
         }).catch(err => {
-            // Log error
+            // TODO: Log error
             //LogError(error);
             console.log('[error: revertLog]', err);
             logElement.innerText = 'Unable to reload log.  Refresh to see log\'s data';
@@ -321,12 +318,12 @@
 
     }
 
-    const createLoadingOverlay = () => {
+    const createLoadingOverlay = (message) => {
         const container = document.createElement('div');
         container.classList.add('log_overlay');
 
         const loadingElement = document.createElement('div');
-        loadingElement.append('Canceling...');
+        loadingElement.append(message);
         loadingElement.classList.add('log_data_loading');
 
         container.appendChild(loadingElement);

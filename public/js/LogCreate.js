@@ -31,19 +31,52 @@
     const submitEventHandler = event => {
         const fd = new FormData(event.target.form);
 
-            const url = 'http://localhost:8081/creates/log';
             const submittedValues = {};
+            const helpfulResourcesNames = [];
+            const helpfulResourcesUrls = [];
+            const helpfulResourcesUsefulnesses = [];
+
             for(keyValueArr of fd) {
-                submittedValues[keyValueArr[0]] = keyValueArr[1];
+                switch (keyValueArr[0]) {
+                    case 'helpfulResource_name':
+                            helpfulResourcesNames.push(keyValueArr[1]);
+                        break;
+                    case 'helpfulResource_url':
+                        helpfulResourcesUrls.push(keyValueArr[1]);
+                        break;
+                    case 'helpfulResource_usefulness':
+                        helpfulResourcesUsefulnesses.push(keyValueArr[1]);
+                        break;
+                    default:
+                        submittedValues[keyValueArr[0]] = keyValueArr[1];
+                }
             }
 
-            console.log('[create event form]', fd);
-            fetch(url, {
+            if (helpfulResourcesNames && 
+                helpfulResourcesUrls && 
+                helpfulResourcesUsefulnesses &&
+                helpfulResourcesNames.length === helpfulResourcesUrls.length &&
+                helpfulResourcesNames.length === helpfulResourcesUsefulnesses.length) {
+                const helpfulResources = [];
+
+                for (var index=0; index < helpfulResourcesNames.length; index++) {
+                    helpfulResources.push({
+                        name: helpfulResourcesNames[index],
+                        url: new URL(helpfulResourcesUrls[index]),
+                        usefulness: helpfulResourcesUsefulnesses[index]
+
+                    })
+                }
+
+                submittedValues.helpfulResources = helpfulResources;
+            }
+
+            const url = 'http://localhost:8081/creates/log';
+            Shared.fetchData(url, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify({userId: window.Log.userId, data:submittedValues})
             })
-            .then(response => response.json())
             .then(data => {
                 // Add new log to UI
                 const logElements = data.map(log => {

@@ -21,7 +21,12 @@ const callDB = (collectionName, url, reqData) => {
         return dbUpdates.update(collectionName, data, userId).then(commandResult => {
             const {matchedCount, modifiedCount} = commandResult;
 
-            return matchedCount === modifiedCount;
+            if (!commandResult.lastErrorObject.updatedExisting) {
+                // Log failure and commandResult
+                throw new Error('Unsuccesful');
+            }
+
+            return commandResult.value;
         })
     }
 

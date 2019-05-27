@@ -27,7 +27,7 @@
         //     displayLogsOnPage.displayLogs(data);            
         // });
 
-        const host = '//localhost:8081';
+        const host = 'http://localhost:8081';
         Shared.fetchData(`${host}/reads/logs`).then(data => {
         // fetchLogs('/read/log/5c82d61a95ba82107847d3ea').then(data => {
             console.table('[dbData]', data);

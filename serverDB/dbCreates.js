@@ -34,7 +34,8 @@ const insertLog = (collectionName, document, userId) => {
     const log = Object.create(logModel);
     log.init(new ObjectId(userId), document.title);
     log.description = document.description;
-    log.helpfulResources = document.helpfulResources;
+    document.helpfulResources ? log.helpfulResources = document.helpfulResources : delete log.helpfulResources;
+    log.helpfulResources.forEach(resource => resource.url = new URL(resource.url).href);
     log.status = document.status;
     log.type = document.type;
 
@@ -56,7 +57,8 @@ const insertLogs = (collectionName, documents, _userId) => {
         const log = Object.create(logModel);
         log.init(new objectId(_userId), document.title);
         log.description = document.description;
-        log.helpfulResources = document.helpfulResources;
+        document.helpfulResources ? log.helpfulResources = document.helpfulResources : delete log.helpfulResources;
+        log.helpfulResources.forEach(resource => resource.url = new URL(resource.url).href);
         log.status = document.status;
         log.type = document.type;
         return log;
