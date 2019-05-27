@@ -192,6 +192,7 @@
 
         const typeParser = (element) => {
             const typeSelectElement = Shared.createFormSelectTypeElement(element.innerText);
+            typeSelectElement.querySelector('select').value = element.innerText;
 
             element.contentEditable = true;
 

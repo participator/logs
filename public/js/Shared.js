@@ -210,16 +210,20 @@
 
     const typeOptions = [
         {
+            text: 'Administration',
+            value: 'Administration'
+        },
+        {
             text: 'Development',
             value: 'Development'
         },
         {
-            text: 'Financial',
-            value: 'Financial'
-        },
-        {
             text: 'Entertainment',
             value: 'Entertainment'
+        },
+        {
+            text: 'Financial',
+            value: 'Financial'
         },
         {
             text: 'Health',
@@ -228,6 +232,10 @@
         {
             text: 'Travel',
             value: 'Travel'
+        },
+        {
+            text: 'Work',
+            value: 'Work'
         }
     ]
 
