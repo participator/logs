@@ -3,7 +3,10 @@ const http = require('http'),
 fs = require('fs'),
 url = require('url'),
 path = require('path'),
-process = require('process');
+process = require('process'),
+dotenv = require('dotenv');
+
+dotenv.config();
 
 // Custom Packages
 const mimeTypes = require('../utils/mime');
@@ -17,27 +20,33 @@ const matchPublicFolder = new RegExp('^/public/[.]*')
  */
 const server = http.createServer((req, res) => {
 
-    let file;
+    const requestedFile = getFileInCurrentDirectoryFullPath(req.url);
     console.log('[requested url]', req.url);
-    console.log('[file exist]', fs.existsSync('..'  + req.url));
-
+    console.log('[file exist]', fs.existsSync(requestedFile));
+    console.log('[dirname]', __dirname);
+    console.log('[filename]', __filename);
+    
     // Return from file system in public folder
-    if(fs.existsSync('..' + req.url) && matchPublicFolder.test(req.url) || req.url === '/') {
+    if(fs.existsSync(requestedFile) && matchPublicFolder.test(req.url) || req.url === '/') {
         const responsePathname = url.parse(req.url).pathname;
         // console.log('[responseUrl]', responsePathname);
         const responseExt = path.extname(responsePathname);
         // console.log('[responseExt]', responseExt);
-
+        
+        let file;
         const mimeType = mimeTypes.setHeaderMimeType(responseExt);
         if (mimeType) {
             console.log('[set Content-Type]', mimeType);
             res.setHeader('Content-Type', mimeType);
         }
-        if (req.url === '/') {
-            file = fs.createReadStream(requestType.main);
+        if (req.url === '/' || req.url === requestType.main) {
+            file = fs.createReadStream(getFileInCurrentDirectoryFullPath(requestType.main));
+        }
+        else if (req.url === '/public/index.html') {
+            file = fs.createReadStream(getFileInCurrentDirectoryFullPath(requestType.app));
         }
         else {
-            file = fs.createReadStream('..' + req.url);
+            file = fs.createReadStream(requestedFile);
         }
         file.pipe(res);
     }
@@ -49,7 +58,10 @@ const server = http.createServer((req, res) => {
 });
 
 const requestType = {
-    main: '../public/index.html'
+    main: '/public/login.html',
+    app: '/public/index.html'
 };
+
+const getFileInCurrentDirectoryFullPath = relativePath => path.join(__dirname, relativePath);
 
 server.listen(port);

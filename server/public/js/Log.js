@@ -84,7 +84,7 @@
 
     /**
      * Create the html element for log area
-     * @param {Object[]} logs log data
+     * @param {Object[]} logs log data in json
      */
     const createLogsElement = (logs) => {
         const logsElement = document.createElement('ul');
@@ -236,18 +236,18 @@
         actions.appendChild(update);
 
         // Add See history to actions
-        const history = document.createElement('button');
-        history.dataset.id = id;
-        history.append('See History');
-        // history.classList.add('btn');
-        actions.appendChild(history);
+        // const history = document.createElement('button');
+        // history.dataset.id = id;
+        // history.append('See History');
+        // // history.classList.add('btn');
+        // actions.appendChild(history);
 
-        // Add See task to actions
-        const tasks = document.createElement('button');
-        tasks.dataset.id = id;
-        tasks.append('See Tasks');
-        // tasks.classList.add('btn');
-        actions.appendChild(tasks);
+        // // Add See task to actions
+        // const tasks = document.createElement('button');
+        // tasks.dataset.id = id;
+        // tasks.append('See Tasks');
+        // // tasks.classList.add('btn');
+        // actions.appendChild(tasks);
 
         // Add Update to actions
         const editableUpdate = document.createElement('button');

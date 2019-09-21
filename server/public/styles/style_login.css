@@ -1,0 +1,62 @@
+:root {
+    --red: rgb(178, 34, 34);
+    --red-transparent: rgb(178, 34, 34, 0.9);
+    --secondary-button: buttonface;
+    --primary-button: buttonface;
+    --tag: buttonface;
+    --white-transparent: rgb(255, 255, 255, 0.8);
+}
+* {
+    box-sizing: border-box;
+}
+html, body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+header div {
+    font-size: 1rem;
+}
+header h1 {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: var(--red);
+    font-weight: bold;
+    min-height: 2.5em;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.question {
+    display: block;
+    color: black;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+#logo {
+    max-height: 20em;
+}
+.logins {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logins a {
+    margin: 1em 2em;
+}
+footer {
+    background-color: var(--red-transparent);
+    color: white;
+    text-align: center;
+}

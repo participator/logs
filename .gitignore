@@ -1,3 +1,6 @@
 node_modules
-data/db
+data/
 .vscode
+.env
+dockerfiles
+package-lock.json

@@ -13,6 +13,7 @@ html,
 body {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -115,6 +116,7 @@ header div.sortBy .sortControl {
     padding: 0.25em .5em;
     position: absolute;
     right: 2em;
+    z-index: 1;
 }
 .app_forms,
 .app_actions {

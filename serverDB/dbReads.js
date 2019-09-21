@@ -15,7 +15,7 @@ const findDocuments = (db, collectionName, document) => {
 
     // console.log('[Logs]', collection);
     
-    return collection.find(document).toArray();
+    return collection.find(document).sort( { modifiedDate: 1 } ).toArray();
 };
 
 /**
