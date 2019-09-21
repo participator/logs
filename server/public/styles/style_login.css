@@ -1,6 +1,7 @@
 :root {
     --red: rgb(178, 34, 34);
     --red-transparent: rgb(178, 34, 34, 0.9);
+    --red-transparent-light: rgb(198, 54, 54, 0.9);
     --secondary-button: buttonface;
     --primary-button: buttonface;
     --tag: buttonface;
@@ -38,22 +39,33 @@ header h1 {
     align-items: center;
     justify-content: center;
 }
-.question {
+.login_link {
+    text-decoration: none;
+}
+.login_link_question {
     display: block;
     color: black;
     font-size: 1.5em;
-    text-decoration: none;
 }
-#logo {
+.login_link_logo {
     max-height: 20em;
 }
-.logins {
+.login_signIn {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.logins a {
+.login_signIn a {
+    background-color: var(--red-transparent);
+    color: var(--white-transparent);
     margin: 1em 2em;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+}
+.login_signIn a:hover,
+.login_signIn a:focus {
+    background-color: var(--red-transparent-light);
 }
 footer {
     background-color: var(--red-transparent);
