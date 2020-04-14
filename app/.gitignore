@@ -1,0 +1,6 @@
+node_modules
+data/
+.vscode
+.env
+dockerfiles
+package-lock.json

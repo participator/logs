@@ -1,0 +1,74 @@
+:root {
+    --red: rgb(178, 34, 34);
+    --red-transparent: rgb(178, 34, 34, 0.9);
+    --red-transparent-light: rgb(198, 54, 54, 0.9);
+    --secondary-button: buttonface;
+    --primary-button: buttonface;
+    --tag: buttonface;
+    --white-transparent: rgb(255, 255, 255, 0.8);
+}
+* {
+    box-sizing: border-box;
+}
+html, body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+header div {
+    font-size: 1rem;
+}
+header h1 {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: var(--red);
+    font-weight: bold;
+    min-height: 2.5em;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login_link {
+    text-decoration: none;
+}
+.login_link_question {
+    display: block;
+    color: black;
+    font-size: 1.5em;
+}
+.login_link_logo {
+    max-height: 20em;
+}
+.login_signIn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login_signIn a {
+    background-color: var(--red-transparent);
+    color: var(--white-transparent);
+    margin: 1em 2em;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+}
+.login_signIn a:hover,
+.login_signIn a:focus {
+    background-color: var(--red-transparent-light);
+}
+footer {
+    background-color: var(--red-transparent);
+    color: white;
+    text-align: center;
+}
