@@ -26,6 +26,10 @@ body {
     font-weight: bold;
     min-height: 2.5em;
 }
+.pageHeader_link {
+    text-decoration: none;
+    color: white;
+}
 header h1 {
     margin-bottom: auto;
     margin-top: auto;
