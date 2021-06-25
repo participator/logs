@@ -1,13 +1,15 @@
 const MongoClient = require('mongodb').MongoClient,
 assert = require('assert');
+require('dotenv').config()
 
 // Localhost Connection URL
 const url_localhost = 'mongodb://localhost:27017/logs';
 
 // Atlas Connection Url
-const url_atlas = 'mongodb+srv://app:logsDBaccess@logs-bjvtl.gcp.mongodb.net/test?retryWrites=true';
+// const url_atlas = 'mongodb+srv://app:logsDBaccess@logs-bjvtl.gcp.mongodb.net/test?retryWrites=true';
+const url_atlas = `mongodb+srv://app:${process.env.DB_PASS}@logs.bjvtl.gcp.mongodb.net/Logs?retryWrites=true&w=majority`;
 
-const url_current = url_localhost;
+const url_current = url_atlas;
 
 // Database Name
 const dbName = 'Log';

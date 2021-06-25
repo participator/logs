@@ -1,6 +1,6 @@
 // npm Packages
 const http = require('http');
-const process = require('process');
+require('dotenv').config;
 
 // Custom Packages
 const mime = require('../utils/mime'),
@@ -10,8 +10,7 @@ deletes = require('./deletes'),
 updates = require('./updates');
 
 // Constants
-const port = process.env.port || 8081;
-
+const port = process.env.SERVER_PORT || 8081;
 // Control what origin can access resource
 // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 // res.setHeader('Vary', 'Origin');
